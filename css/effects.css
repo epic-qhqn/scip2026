@@ -1,0 +1,44 @@
+/* ========================================================
+   SCIP STEM - Effects & Animations
+   Chức năng: CSS Animations thuần, Lá rơi mùa thu, Các hiệu ứng phụ
+======================================================== */
+
+/* Hiệu ứng Môi trường (Lá rơi) */
+#leaves-container {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none; 
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.leaf-wrapper {
+    position: absolute;
+    top: -50px;
+    animation: fall linear forwards;
+}
+
+.leaf {
+    animation: sway ease-in-out infinite alternate;
+    transform-origin: center top;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-50px) rotate3d(1, 1, 1, 0deg); }
+    100% { transform: translateY(110vh) rotate3d(1, 1, 1, 720deg); }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-30px) rotate(-15deg); }
+    100% { transform: translateX(30px) rotate(15deg); }
+}
+
+/* Thêm các hiệu ứng nhấp nháy cho text nổi bật */
+@keyframes blink-glow {
+    0%, 100% { text-shadow: 0 0 5px currentColor; }
+    50% { text-shadow: 0 0 20px currentColor; }
+}
+
+.highlight-glow {
+    animation: blink-glow 2s infinite;
+}
