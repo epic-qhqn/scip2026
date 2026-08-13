@@ -1,0 +1,1115 @@
+/* ========================================================
+   SCIP STEM - Organic Neo-Brutalism Style
+   Tone: Mùa Thu (Đỏ - Cam - Vàng)
+   Chức năng: Cấu trúc UI cốt lõi, Grid, Typography
+======================================================== */
+
+:root {
+    --bg-color: #FFF3E0;
+    /* Tông ấm hơn cho mùa thu */
+    --border-color: #1A1A1A;
+    --red: #E03C31;
+    --orange: #F57C00;
+    --yellow: #FBC02D;
+    --white: #FFFFFF;
+    --blue: #2196F3;
+    --green: #4CAF50;
+
+    --brutal-border: 4px solid var(--border-color);
+    --brutal-shadow: 8px 8px 0px var(--border-color);
+    --brutal-radius: 25px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lexend', sans-serif;
+}
+
+html, body {
+    width: 100vw;
+    height: 100svh;
+    max-width: 100vw;
+    max-height: 100svh;
+    overscroll-behavior: none; 
+    overflow: hidden;
+    position: fixed;
+}
+
+#app {
+    width: 100vw;
+    height: 100svh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: y proximity;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--border-color);
+    line-height: 1.6;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 35px 35px;
+    background-position: -17px -17px;
+    transform-origin: top center;
+}
+
+/* =========================================
+   NAVIGATION & PROGRESS BAR
+========================================= */
+.top-nav {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    /* Thu hẹp lại, chừa 2 bên */
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: var(--brutal-border);
+    border-radius: var(--brutal-radius);
+    box-shadow: 5px 5px 0px var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    z-index: 100;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-text {
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: none;
+}
+
+@media (min-width: 600px) {
+    .progress-text {
+        display: block;
+    }
+}
+
+.puzzle-slots {
+    display: flex;
+    gap: 8px;
+}
+
+.slot {
+    width: 28px;
+    height: 28px;
+    border: 2px dashed var(--border-color);
+    border-radius: 6px;
+    background: transparent;
+    transition: background 0.3s;
+}
+
+.slot.filled {
+    border: 2px solid var(--border-color);
+}
+.slot:nth-child(1).filled { background: var(--yellow); }
+.slot:nth-child(2).filled { background: var(--blue); }
+.slot:nth-child(3).filled { background: var(--red); }
+.slot:nth-child(4).filled { background: var(--orange); }
+.slot:nth-child(5).filled { background: var(--green); }
+.slot:nth-child(6).filled { background: var(--white); }
+
+@keyframes pulse-flame {
+    0% {
+        opacity: 0.7;
+        transform: scaleY(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scaleY(2);
+    }
+}
+
+.burner-flame {
+    animation: pulse-flame 0.5s infinite alternate ease-in-out;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+.hero {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--red), var(--orange));
+    color: var(--white);
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    margin-bottom: 30px;
+    transform: rotate(-3deg);
+    border: 3px solid var(--border-color);
+    box-shadow: 4px 4px 0px var(--border-color);
+}
+
+.hero h1 {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--border-color);
+}
+
+.text-orange {
+    background: linear-gradient(90deg, var(--red), var(--orange), var(--yellow));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(4px 4px 0px var(--border-color));
+    display: inline-block;
+}
+
+.text-gradient-blue-purple {
+    background: linear-gradient(90deg, #2196F3, #9C27B0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+}
+
+.hero p {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 600;
+    color: var(--border-color);
+}
+
+.hero-subtitle {
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    font-weight: 700;
+    color: var(--border-color);
+    margin-bottom: 25px;
+    max-width: 650px;
+    line-height: 1.4;
+}
+
+.hero-features {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.feature-chip {
+    background: #FFF;
+    border: 3px solid var(--border-color);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    box-shadow: 3px 3px 0px var(--border-color);
+    transition: transform 0.2s, background 0.2s;
+    cursor: default;
+}
+
+.feature-chip:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: var(--yellow);
+}
+
+.btn-hero-start {
+    background: linear-gradient(45deg, var(--red), var(--orange));
+    color: #FFF;
+    border: 4px solid var(--border-color);
+    padding: 16px 40px;
+    font-size: 1.25rem;
+    font-weight: 900;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 6px 6px 0px var(--border-color);
+    transition: all 0.2s ease;
+    animation: pulse-hero-btn 2.5s infinite ease-in-out;
+}
+
+.btn-hero-start:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px var(--border-color);
+    background: linear-gradient(45deg, var(--orange), var(--red));
+}
+
+.btn-hero-start:active {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0px var(--border-color);
+}
+
+@keyframes pulse-hero-btn {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+.scroll-indicator {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--border-color);
+    opacity: 0.85;
+    transition: opacity 0.2s;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+}
+
+.bounce-arrow {
+    font-size: 1.8rem;
+    animation: bounce-down 1.5s infinite ease-in-out;
+}
+
+@keyframes bounce-down {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+/* =========================================
+   MAIN MAP & SCROLL SNAP CARDS
+========================================= */
+.map-container {
+    max-width: 1200px;
+    /* To hơn trên màn hình lớn */
+    margin: 0 auto;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+}
+
+.card {
+    border: var(--brutal-border);
+    border-radius: var(--brutal-radius);
+    box-shadow: var(--brutal-shadow);
+    padding: 50px 40px;
+    position: relative;
+    transition: transform 0.2s ease;
+    scroll-snap-align: center;
+    scroll-margin-top: 100px;
+}
+
+.card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px var(--border-color);
+}
+
+.bg-yellow {
+    background-color: var(--yellow);
+}
+
+.bg-red {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.bg-orange {
+    background-color: var(--orange);
+}
+
+.bg-white {
+    background-color: var(--white);
+}
+
+.bg-blue {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.bg-green {
+    background-color: var(--green);
+    color: var(--white);
+}
+
+.station-number {
+    position: absolute;
+    top: -30px;
+    left: -10px;
+    width: 70px;
+    height: 70px;
+    background: var(--border-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    border: var(--brutal-border);
+    transform: rotate(-10deg);
+}
+
+.bg-red .station-number,
+.bg-blue .station-number,
+.bg-green .station-number {
+    background: var(--white);
+    color: var(--border-color);
+}
+
+.station h2 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    margin-bottom: 8px;
+    margin-top: 10px;
+    font-weight: 800;
+}
+
+.station p {
+    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.simulation-placeholder {
+    background: rgba(255, 255, 255, 0.4);
+    border: 3px dashed var(--border-color);
+    border-radius: 16px;
+    min-height: clamp(300px, 45dvh, 450px);
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 35px 0;
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 30px;
+    contain: layout style;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: relative;
+    touch-action: pan-y;
+}
+
+#station-1 .simulation-placeholder {
+    overflow: visible !important;
+}
+
+.sim-text {
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 800;
+}
+
+.sim-subtext {
+    font-size: clamp(0.95rem, 2vw, 1.3rem);
+    margin-top: 5px;
+}
+
+.bg-red .simulation-placeholder,
+.bg-blue .simulation-placeholder,
+.bg-green .simulation-placeholder {
+    background: rgba(0, 0, 0, 0.15);
+    border-color: var(--white);
+    color: var(--white);
+}
+
+/* =========================================
+   LAVA LAMP & BURNER (STATION 3 & 4)
+========================================= */
+@keyframes lava-flow {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-70px) scale(1.2);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.lava-drop {
+    animation: lava-flow 4s infinite ease-in-out;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+.btn {
+    border: var(--brutal-border);
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 5px 5px 0px var(--border-color);
+    transition: all 0.1s;
+    width: 100%;
+    will-change: transform, opacity;
+}
+
+.btn:active {
+    transform: translate(5px, 5px);
+    box-shadow: 0px 0px 0px var(--border-color);
+}
+
+.btn-primary {
+    background: var(--white);
+    color: var(--border-color);
+}
+
+/* =========================================
+   FOOTER & MODAL
+========================================= */
+footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    margin-top: 40px;
+    background: var(--white);
+    border-top: 4px dashed var(--border-color);
+    scroll-snap-align: end;
+}
+
+.slogan {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: var(--red);
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+footer p {
+    font-size: clamp(0.6rem, 1vw, 0.8rem);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+footer a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 800;
+    transition: color 0.2s;
+}
+
+footer a:hover {
+    color: var(--orange);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    padding: 40px;
+}
+
+.modal-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.name-input {
+    width: 100%;
+    padding: 15px 20px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--border-color);
+    background: var(--white);
+    border: var(--brutal-border);
+    border-radius: 15px;
+    box-shadow: 5px 5px 0px var(--border-color);
+    outline: none;
+    text-align: center;
+}
+
+.name-input:focus {
+    box-shadow: 5px 5px 0px var(--orange);
+    border-color: var(--orange);
+}
+
+.name-input-error {
+    color: var(--yellow);
+    font-weight: 700;
+    margin-top: 12px;
+    font-size: 0.95rem;
+}
+
+.name-input-error.hidden {
+    display: none;
+}
+
+.cert-image-placeholder {
+    width: 100%;
+    height: 350px;
+    background: var(--white);
+    border: var(--brutal-border);
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 16px;
+    color: var(--border-color);
+}
+
+/* =========================================
+   SCROLLYTELLING TIMELINE & EASTER EGGS
+========================================= */
+.timeline-container {
+    position: fixed;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 50;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--border-color);
+    z-index: -1;
+}
+
+.timeline-dot {
+    width: 18px;
+    height: 18px;
+    background: var(--white);
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    transition: all 0.3s;
+    position: relative;
+    cursor: pointer;
+}
+
+.timeline-dot::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--red);
+    color: var(--white);
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    font-weight: bold;
+    box-shadow: 3px 3px 0px var(--border-color);
+}
+
+.timeline-dot:hover::after {
+    opacity: 1;
+}
+
+.timeline-dot.active {
+    background: var(--red);
+    transform: scale(1.4);
+    box-shadow: 0 0 10px rgba(224, 60, 49, 0.6);
+}
+
+.easter-egg {
+    position: absolute;
+    font-size: clamp(2rem, 5vw, 4rem);
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+    filter: drop-shadow(3px 3px 0px var(--border-color));
+}
+
+.easter-egg:active {
+    transform: scale(0.7) !important;
+}
+
+/* CSS Floating Parallax */
+@keyframes float-fast {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-30px) rotate(15deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+@keyframes float-slow {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(-10deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+@keyframes cloud-drift {
+    0% {
+        transform: translateX(0px);
+    }
+
+    50% {
+        transform: translateX(40px);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.parallax-fast {
+    animation: float-fast 3.5s ease-in-out infinite;
+}
+
+.parallax-slow {
+    animation: float-slow 6s ease-in-out infinite;
+}
+
+.parallax-cloud {
+    animation: cloud-drift 8s ease-in-out infinite alternate;
+    filter: none;
+}
+
+@keyframes float-bounce {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.06) rotate(5deg);
+    }
+}
+
+@keyframes float-drift {
+
+    0%,
+    100% {
+        transform: translateX(0px) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateX(15px) rotate(8deg);
+    }
+}
+
+.parallax-bounce {
+    animation: float-bounce 4s ease-in-out infinite;
+}
+
+.parallax-drift {
+    animation: float-drift 5s ease-in-out infinite;
+}
+
+/* Footprints SVG Trail (Dấu chân người bước đi uốn lượn liên tục nối các trạm) */
+.footprint-trail {
+    position: relative;
+    height: 140px;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+}
+
+.footprint-svg-trail {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Animation cho hạt Electron hình tròn 100% không bị dẹp */
+@keyframes electron-flow {
+    0% {
+        left: 5%;
+        bottom: 30px;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    15% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        bottom: 5px;
+    }
+
+    85% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        left: 90%;
+        bottom: 30px;
+        opacity: 0;
+        transform: scale(0.2);
+    }
+}
+
+.electron-bubble {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle, #FFF 20%, #FFD54F 80%);
+    border: 2px solid #FFC107;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #FFEB3B, 0 0 4px #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 13px;
+    color: #1A1A1A;
+    animation: electron-flow 1.5s infinite linear;
+}
+
+.electron-bubble.e-1 {
+    animation-delay: 0s;
+}
+
+.electron-bubble.e-2 {
+    animation-delay: 0.375s;
+}
+
+.electron-bubble.e-3 {
+    animation-delay: 0.75s;
+}
+
+.electron-bubble.e-4 {
+    animation-delay: 1.125s;
+}
+
+/* Tối ưu hóa Responsive cho Laptop, PC, Tablet và iPhone 14 / Mobile */
+@media (min-width: 1025px) {
+    .map-container {
+        max-width: 1150px;
+    }
+
+    .card {
+        width: 65%;
+    }
+
+    .station:nth-child(odd) {
+        margin-right: auto;
+        margin-left: 5%;
+    }
+
+    .station:nth-child(even) {
+        margin-left: auto;
+        margin-right: 5%;
+    }
+
+    .btn {
+        width: auto;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 601px) {
+    .card {
+        width: 85%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .top-nav {
+        width: 95% !important;
+        padding: 8px 12px !important;
+        top: 10px !important;
+    }
+
+    .logo {
+        font-size: 1.05rem !important;
+    }
+
+    .progress-text {
+        display: none !important;
+    }
+
+    .puzzle-slots {
+        gap: 3px !important;
+    }
+
+    .slot {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .hero {
+        padding: 80px 15px 30px !important;
+        min-height: auto !important;
+    }
+
+    .hero h1 {
+        font-size: 2.1rem !important;
+    }
+
+    .hero-badge {
+        font-size: 0.8rem !important;
+        padding: 5px 12px !important;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem !important;
+        margin-bottom: 20px !important;
+    }
+
+    .feature-chip {
+        font-size: 0.8rem !important;
+        padding: 6px 12px !important;
+    }
+
+    .btn-hero-start {
+        padding: 14px 24px !important;
+        font-size: 1rem !important;
+        width: 100% !important;
+    }
+
+    .map-container {
+        padding: 10px !important;
+        gap: 20px !important;
+    }
+
+    .card {
+        width: 100% !important;
+        padding: 25px 15px 20px !important;
+        border-radius: 18px !important;
+    }
+
+    .station-number {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1.2rem !important;
+        top: -15px !important;
+        left: 10px !important;
+    }
+
+    .station h2 {
+        font-size: 1.6rem !important;
+    }
+
+    .station p {
+        font-size: 1rem !important;
+    }
+
+    .simulation-placeholder {
+        margin: 20px 0 !important;
+        min-height: 400px !important;
+        height: auto !important;
+        padding: 10px !important;
+        overflow: hidden !important;
+        max-width: 100% !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    /* Adaptive Scale Trạm 3 (5 đèn lava) */
+    #station-3 .simulation-placeholder>div:nth-child(2) {
+        transform: scale(calc(100vw / 500)) !important;
+        transform-origin: bottom center !important;
+    }
+
+    /* Adaptive Scale Trạm 4 (Bình ảo thuật) */
+    #s4-flask-wrapper {
+        transform: scale(calc(100vw / 400)) !important;
+        transform-origin: bottom center !important;
+    }
+
+    /* Adaptive Scale Trạm 5 VEX IQ Robot & Nút bấm */
+    #s5-map {
+        transform: scale(calc(100vw / 450)) !important;
+        transform-origin: center center !important;
+    }
+
+    .s5-slot,
+    .s5-color-btn,
+    #s5-clear-btn {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 1.3rem !important;
+    }
+
+    #s5-slots,
+    #s5-controls {
+        gap: 6px !important;
+    }
+
+    /* Ẩn huy hiệu 3D lề ngoài trên di động/tablet */
+    .stem-trophy-badge {
+        display: none !important;
+    }
+
+    /* Reset JS inline absolute positioning for info panels inside simulation placeholder */
+    .simulation-placeholder>div[style*="top: 15px"],
+    .simulation-placeholder>div[style*="top:15px"] {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        text-align: center !important;
+        z-index: 10 !important;
+        margin-bottom: 10px !important;
+    }
+
+    .simulation-placeholder>div[style*="top: 15px"] .sim-text {
+        font-size: 1rem !important;
+        margin-bottom: 2px !important;
+    }
+
+    .simulation-placeholder>div[style*="top: 15px"] .sim-subtext {
+        font-size: 0.85rem !important;
+    }
+
+    /* Reset JS inline absolute positioning for controls panel inside simulation placeholder */
+    .simulation-placeholder>div[style*="bottom: 20px"],
+    .simulation-placeholder>div[style*="bottom:20px"] {
+        position: relative !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 5px !important;
+        padding: 0 5px !important;
+        z-index: 10 !important;
+        margin-top: 10px !important;
+    }
+
+    .simulation-placeholder>div[style*="bottom: 20px"] button {
+        padding: 6px 10px !important;
+        font-size: 1rem !important;
+        white-space: nowrap !important;
+        flex: 1 1 auto !important;
+    }
+
+    /* Hide the footprint trails, timeline and sticky notes on mobile for cleaner look */
+    .footprint-trail,
+    .timeline-container,
+    .empty-photo-frame {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .stem-trophy-badge {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .timeline-container {
+        display: flex !important;
+        left: 5px !important;
+        transform: scale(0.65) !important;
+        transform-origin: left center !important;
+    }
+    .timeline-dot::after {
+        display: none !important;
+    }
+    .empty-photo-frame {
+        display: block !important;
+        opacity: 1 !important;
+        z-index: 10 !important;
+        transform: scale(0.45) !important;
+    }
+    .empty-photo-frame.frame-left {
+        left: -15px !important;
+        transform-origin: center left !important;
+    }
+    .empty-photo-frame.frame-right {
+        right: -15px !important;
+        transform-origin: center right !important;
+    }
+}
+
+/* Touch manipulation to prevent double tap zoom */
+button, .btn, .btn-primary, .s5-color-btn, #s5-clear-btn {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
