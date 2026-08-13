@@ -230,6 +230,28 @@
     </footer>
 </div> <!-- End #app -->
 
+    <!-- Modal Nhập tên (hiện trước khi xem chứng nhận) -->
+    <div id="name-input-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="font-size: 2.5rem; color: var(--red); margin-bottom: 20px;">🎉 CHÚC MỪNG! 🎉</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--white);">Bạn đã hoàn thành xuất sắc 6 trạm thử thách Khoa học!<br>Nhập họ tên để nhận chứng nhận của bạn nhé.</p>
+
+            <form id="name-input-form">
+                <input
+                    type="text"
+                    id="participant-name-input"
+                    class="name-input"
+                    placeholder="Nhập họ và tên của bạn..."
+                    maxlength="60"
+                    autocomplete="off"
+                    required
+                >
+                <p id="name-input-error" class="name-input-error hidden">Vui lòng nhập tên của bạn trước khi tiếp tục.</p>
+                <button type="submit" class="btn btn-primary" style="margin-top: 20px;">✨ NHẬN CHỨNG NHẬN</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal Chứng nhận -->
     <div id="cert-modal" class="modal hidden">
         <div class="modal-content">
@@ -237,10 +259,10 @@
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--white);">Bạn đã hoàn thành xuất sắc 6 trạm thử thách Khoa học!</p>
             
             <div style="margin-bottom: 30px;">
-                <img src="img/cert.png" alt="Chứng nhận" style="max-width: 100%; border-radius: 8px; border: 4px solid var(--border-color); box-shadow: 4px 4px 0 var(--border-color);">
+                <img id="cert-img" src="img/cert.png" alt="Chứng nhận" style="max-width: 100%; border-radius: 8px; border: 4px solid var(--border-color); box-shadow: 4px 4px 0 var(--border-color);">
             </div>
             
-            <a href="img/cert.png" download="ChungNhan_SCIP_GIALAI.png" class="btn btn-primary" style="text-decoration: none; display: inline-block;">📥 TẢI CHỨNG NHẬN</a>
+            <a id="cert-download-link" href="img/cert.png" download="ChungNhan_SCIP_GIALAI.png" class="btn btn-primary" style="text-decoration: none; display: inline-block;">📥 TẢI CHỨNG NHẬN</a>
         </div>
     </div>
 
@@ -250,6 +272,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <!-- Các file Logic Modules -->
+    <script src="js/certificate.js"></script>
     <script src="js/app.js"></script>
     <script src="js/station_1.js"></script>
     <script src="js/station_2.js"></script>
