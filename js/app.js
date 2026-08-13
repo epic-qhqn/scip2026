@@ -117,20 +117,81 @@ const RewardSystem = {
         
         if(isFinished) {
             setTimeout(() => {
-                const modal = document.getElementById('cert-modal');
-                if(modal) {
-                    modal.classList.remove('hidden');
+                const nameModal = document.getElementById('name-input-modal');
+                if(nameModal) {
+                    nameModal.classList.remove('hidden');
                     if(window.gsap) {
-                        gsap.fromTo(".modal-content", 
-                            { y: -50, opacity: 0 }, 
+                        gsap.fromTo(".modal-content",
+                            { y: -50, opacity: 0 },
                             { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
                         );
                     }
+                    const nameInput = document.getElementById('participant-name-input');
+                    if(nameInput) setTimeout(() => nameInput.focus(), 300);
                 }
             }, 800); // Đợi một chút để người dùng nhìn thấy mảnh ghép cuối
         }
     }
 };
+
+// ==========================================
+// 1B. XỬ LÝ FORM NHẬP TÊN -> SINH CHỨNG NHẬN
+// ==========================================
+const NameInputController = {
+    init() {
+        const form = document.getElementById('name-input-form');
+        if(!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('participant-name-input');
+            const errorEl = document.getElementById('name-input-error');
+            const name = (input.value || '').trim();
+
+            if(!name) {
+                if(errorEl) errorEl.classList.remove('hidden');
+                input.focus();
+                return;
+            }
+            if(errorEl) errorEl.classList.add('hidden');
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn ? submitBtn.textContent : '';
+            if(submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Đang tạo chứng nhận...';
+            }
+
+            try {
+                if(window.CertificateModule) {
+                    await CertificateModule.generateAndDisplay(name);
+                }
+            } catch(err) {
+                console.error('Lỗi khi tạo chứng nhận:', err);
+            } finally {
+                if(submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            }
+
+            const nameModal = document.getElementById('name-input-modal');
+            const certModal = document.getElementById('cert-modal');
+            if(nameModal) nameModal.classList.add('hidden');
+            if(certModal) {
+                certModal.classList.remove('hidden');
+                if(window.gsap) {
+                    gsap.fromTo(".modal-content",
+                        { y: -50, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
+                    );
+                }
+            }
+        });
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => NameInputController.init());
 
 // ==========================================
 // 2. HIỆU ỨNG MÔI TRƯỜNG (ENVIRONMENT)
