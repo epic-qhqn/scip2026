@@ -30,17 +30,19 @@
 html {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
-    max-width: 100vw;
+    position: relative;
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--border-color);
     line-height: 1.6;
-    overflow-x: hidden;
-    max-width: 100vw;
-    width: 100%;
     background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
     background-size: 35px 35px;
     background-position: -17px -17px;
@@ -140,11 +142,11 @@ body {
 .hero {
     text-align: center;
     padding: 20px;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 100dvh;
     scroll-snap-align: start;
 }
 
@@ -517,8 +519,8 @@ footer a:hover {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100dvh;
     background: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
@@ -1004,7 +1006,7 @@ footer a:hover {
 
     .simulation-placeholder>div[style*="bottom: 20px"] button {
         padding: 6px 10px !important;
-        font-size: 0.85rem !important;
+        font-size: 1rem !important;
         white-space: nowrap !important;
         flex: 1 1 auto !important;
     }
