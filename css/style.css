@@ -30,6 +30,8 @@
 html {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 
 body {
@@ -37,6 +39,8 @@ body {
     color: var(--border-color);
     line-height: 1.6;
     overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
     background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
     background-size: 35px 35px;
     background-position: -17px -17px;
@@ -912,6 +916,8 @@ footer a:hover {
         margin: 20px 0 !important;
         min-height: 320px !important;
         padding: 10px !important;
+        overflow: hidden !important;
+        max-width: 100% !important;
     }
 
     /* Scale Trạm 3 (5 đèn lava) vừa vặn chậu card trên điện thoại iPhone 14 */
@@ -947,11 +953,13 @@ footer a:hover {
     /* Reset JS inline absolute positioning for info panels inside simulation placeholder */
     .simulation-placeholder>div[style*="top: 15px"],
     .simulation-placeholder>div[style*="top:15px"] {
-        top: 10px !important;
+        position: relative !important;
+        top: 0 !important;
         left: 0 !important;
         width: 100% !important;
         text-align: center !important;
         z-index: 10 !important;
+        margin-bottom: 10px !important;
     }
 
     .simulation-placeholder>div[style*="top: 15px"] .sim-text {
@@ -966,7 +974,8 @@ footer a:hover {
     /* Reset JS inline absolute positioning for controls panel inside simulation placeholder */
     .simulation-placeholder>div[style*="bottom: 20px"],
     .simulation-placeholder>div[style*="bottom:20px"] {
-        bottom: 5px !important;
+        position: relative !important;
+        bottom: 0 !important;
         right: 0 !important;
         left: 0 !important;
         width: 100% !important;
@@ -976,6 +985,7 @@ footer a:hover {
         gap: 5px !important;
         padding: 0 5px !important;
         z-index: 10 !important;
+        margin-top: 10px !important;
     }
 
     .simulation-placeholder>div[style*="bottom: 20px"] button {
@@ -1000,35 +1010,32 @@ footer a:hover {
 }
 
 @media (max-width: 1024px) {
-
-    /* Compact Timeline on Mobile/Tablet */
     .timeline-container {
         display: flex !important;
         left: 5px !important;
         scale: 0.65 !important;
         transform-origin: left center !important;
     }
-
     .timeline-dot::after {
         display: none !important;
-        /* Hide hover text */
     }
-
-    /* Pinned Photo Frames */
     .empty-photo-frame {
         display: block !important;
         opacity: 1 !important;
         z-index: 10 !important;
         scale: 0.45 !important;
     }
-
     .empty-photo-frame.frame-left {
         left: -15px !important;
         transform-origin: center left !important;
     }
-
     .empty-photo-frame.frame-right {
         right: -15px !important;
         transform-origin: center right !important;
     }
+}
+
+/* Touch manipulation to prevent double tap zoom */
+button, .btn, .s5-color-btn, .timeline-dot, .easter-egg, .scroll-indicator {
+    touch-action: manipulation;
 }
