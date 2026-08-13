@@ -223,16 +223,17 @@
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="neo-footer">
         <h2 class="slogan">"Trao trải nghiệm - Khơi sáng tạo - Gieo yêu thương"</h2>
-        <p style="margin-bottom: 2px;">Một dự án của <a href="https://www.facebook.com/makeitepic.qhqn" target="_blank">EPIC - CLB STEM Quốc Học Quy Nhơn</a></p>
-        <p style="margin-top: 2px;">Kết hợp với <a href="https://www.facebook.com/DoantruongQuocHocQN" target="_blank">Đoàn trường THPT Quốc Học Quy Nhơn</a></p>
+        <p style="margin-bottom: 2px;">Một dự án của <a href="https://www.facebook.com/DoantruongQuocHocQN" target="_blank">Đoàn trường THPT Quốc Học Quy Nhơn</a></p>
+        <p style="margin-top: 2px;">Thực hiện: <a href="https://www.facebook.com/makeitepic.qhqn" target="_blank">EPIC - CLB STEM Quốc Học Quy Nhơn</a></p>
     </footer>
 </div> <!-- End #app -->
 
     <!-- Modal Nhập tên (hiện trước khi xem chứng nhận) -->
     <div id="name-input-modal" class="modal hidden">
-        <div class="modal-content">
+        <div class="modal-content" style="position: relative;">
+            <span class="close-modal-btn" onclick="document.getElementById('name-input-modal').classList.add('hidden')" style="position: absolute; top: 10px; right: 20px; font-size: 2rem; font-weight: bold; cursor: pointer; color: var(--border-color);">&times;</span>
             <h2 style="font-size: 2.5rem; color: var(--red); margin-bottom: 20px;">🎉 CHÚC MỪNG! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--white);">Bạn đã hoàn thành xuất sắc 6 trạm thử thách Khoa học!<br>Nhập họ tên để nhận chứng nhận của bạn nhé.</p>
 
@@ -254,7 +255,8 @@
 
     <!-- Modal Chứng nhận -->
     <div id="cert-modal" class="modal hidden">
-        <div class="modal-content">
+        <div class="modal-content" style="position: relative;">
+            <span class="close-modal-btn" onclick="document.getElementById('cert-modal').classList.add('hidden')" style="position: absolute; top: 10px; right: 20px; font-size: 2rem; font-weight: bold; cursor: pointer; color: var(--border-color);">&times;</span>
             <h2 style="font-size: 2.5rem; color: var(--red); margin-bottom: 20px;">🎉 CHÚC MỪNG! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--white);">Bạn đã hoàn thành xuất sắc 6 trạm thử thách Khoa học!</p>
             
