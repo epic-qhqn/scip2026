@@ -4,6 +4,29 @@
  */
 
 // ==========================================
+// 0. UTILS (Anti-Zoom Button Bindings)
+// ==========================================
+window.bindAntiZoomBtn = function(btn, callback) {
+    if(!btn) return;
+    let isTouching = false;
+    btn.addEventListener('touchstart', function(event) {
+        event.preventDefault(); 
+        isTouching = true; 
+        callback(event);
+    }, { passive: false });
+    
+    btn.addEventListener('touchend', function(event) {
+        event.preventDefault();
+        setTimeout(() => { isTouching = false; }, 100);
+    }, { passive: false });
+    
+    btn.addEventListener('click', function(event) {
+        if (isTouching) return;
+        callback(event);
+    });
+};
+
+// ==========================================
 // 0. HỆ THỐNG ÂM THANH (AUDIO ENGINE)
 // ==========================================
 const AudioEngine = {

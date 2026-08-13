@@ -110,8 +110,13 @@ body {
 
 .slot.filled {
     border: 2px solid var(--border-color);
-    background: var(--yellow);
 }
+.slot:nth-child(1).filled { background: var(--yellow); }
+.slot:nth-child(2).filled { background: var(--blue); }
+.slot:nth-child(3).filled { background: var(--red); }
+.slot:nth-child(4).filled { background: var(--orange); }
+.slot:nth-child(5).filled { background: var(--green); }
+.slot:nth-child(6).filled { background: var(--white); }
 
 @keyframes pulse-flame {
     0% {
@@ -1044,7 +1049,13 @@ footer a:hover {
     }
 }
 
-/* Touch manipulation to prevent double tap zoom across whole page on iOS */
-* {
+/* Touch manipulation to prevent double tap zoom */
+button, .btn, .btn-primary, .s5-color-btn, #s5-clear-btn {
     touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
 }

@@ -79,7 +79,7 @@ const Station4 = {
     },
     
     bindEvents() {
-        this.btnShake.addEventListener('click', () => {
+        window.bindAntiZoomBtn(this.btnShake, () => {
             if(this.isShaking || this.isCompleted) return;
             if(window.AudioEngine) {
                 AudioEngine.playWind();

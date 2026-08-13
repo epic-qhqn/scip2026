@@ -106,7 +106,7 @@ const Station6 = {
     },
     
     bindEvents() {
-        this.btnAction.addEventListener('click', () => {
+        window.bindAntiZoomBtn(this.btnAction, () => {
             if(window.AudioEngine) AudioEngine.playClick();
             if (this.state === 0) {
                 this.plantSeed();

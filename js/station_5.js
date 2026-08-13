@@ -125,7 +125,7 @@ const Station5 = {
         });
         
         // Nút xóa
-        document.getElementById('s5-clear-btn').addEventListener('click', () => {
+        window.bindAntiZoomBtn(document.getElementById('s5-clear-btn'), () => {
             if(this.isRunning) return;
             if(window.AudioEngine) AudioEngine.playPop();
             this.commands = [];
@@ -138,7 +138,7 @@ const Station5 = {
         });
         
         // Nút Chạy
-        this.btnRun.addEventListener('click', () => {
+        window.bindAntiZoomBtn(this.btnRun, () => {
             if(window.AudioEngine) AudioEngine.playClick();
             if(this.isRunning) return;
             // Cho phép lọc mảng commands để tránh undefined (trường hợp user kéo thả bỏ qua ô)
@@ -155,7 +155,7 @@ const Station5 = {
         const btnHint = document.getElementById('s5-btn-hint');
         const hintText = document.getElementById('s5-hint-text');
         if(btnHint && hintText) {
-            btnHint.addEventListener('click', () => {
+            window.bindAntiZoomBtn(btnHint, () => {
                 if(hintText.style.display === 'none') {
                     hintText.style.display = 'block';
                     btnHint.innerText = '🙈 Ẩn gợi ý';

@@ -124,9 +124,7 @@ const Station2 = {
             }
         };
         
-        // Hỗ trợ cả mobile cảm ứng và desktop
-        this.btnWind.addEventListener('mousedown', handleInteraction);
-        this.btnWind.addEventListener('touchstart', handleInteraction, {passive: false});
+        window.bindAntiZoomBtn(this.btnWind, handleInteraction);
     },
     
     updateUI() {

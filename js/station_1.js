@@ -89,7 +89,7 @@ const Station1 = {
     
     bindEvents() {
         // Nút Đổ nước (+10%)
-        document.getElementById('s1-add-water').addEventListener('click', () => {
+        window.bindAntiZoomBtn(document.getElementById('s1-add-water'), () => {
             if(window.AudioEngine) AudioEngine.playDrop();
             if(this.isLaunched) return;
             if(this.waterLevel < 100) this.waterLevel += 10;
@@ -97,7 +97,7 @@ const Station1 = {
         });
         
         // Nút Bơm khí (+10 PSI, giới hạn 80 PSI)
-        document.getElementById('s1-add-air').addEventListener('click', () => {
+        window.bindAntiZoomBtn(document.getElementById('s1-add-air'), () => {
             if(window.AudioEngine) AudioEngine.playWind();
             if(this.isLaunched) return;
             if(this.pressure < 80) {
@@ -116,13 +116,13 @@ const Station1 = {
         });
         
         // Nút Chơi lại
-        document.getElementById('s1-reset').addEventListener('click', () => {
+        window.bindAntiZoomBtn(document.getElementById('s1-reset'), () => {
             if(window.AudioEngine) AudioEngine.playClick();
             this.reset();
         });
         
         // Nút Phóng tên lửa
-        this.btnLaunch.addEventListener('click', () => {
+        window.bindAntiZoomBtn(this.btnLaunch, () => {
             if(window.AudioEngine) AudioEngine.playClick();
             this.launch();
         });

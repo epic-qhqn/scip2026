@@ -143,7 +143,7 @@ const Station3 = {
     },
     
     bindEvents() {
-        this.btnMix.addEventListener('click', () => {
+        window.bindAntiZoomBtn(this.btnMix, () => {
             if(this.isMixed) return;
             if(window.AudioEngine) AudioEngine.playClick();
             this.startReaction();
