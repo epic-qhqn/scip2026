@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EPIC x SCIP 2026</title>
+    <link rel="icon" type="image/x-icon" href="img/epic.ico">
+    
+    <!-- Google Fonts: Lexend -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS Chính -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/effects.css">
+</head>
+<body>
+    <div id="leaves-container"></div>
+
+    <!-- Easter Eggs (Parallax elements) -->
+    <div class="easter-egg parallax-fast" style="top: 750px; left: 5vw;" onclick="AudioEngine.playPop()">🐿️</div>
+    <div class="easter-egg parallax-slow" style="top: 1300px; right: 8vw;" onclick="AudioEngine.playPop()">🌰</div>
+    <div class="easter-egg parallax-fast" style="top: 1900px; left: 8vw;" onclick="AudioEngine.playPop()">🍄</div>
+    <div class="easter-egg parallax-slow" style="top: 2600px; right: 5vw;" onclick="AudioEngine.playPop()">🍎</div>
+    
+    <!-- New Easter Eggs -->
+    <div class="easter-egg parallax-cloud" style="top: 300px; right: 10vw; font-size: 4rem; opacity: 0.6; z-index: -1;">☁️</div>
+    <div class="easter-egg parallax-cloud" style="top: 1100px; left: 2vw; font-size: 5rem; opacity: 0.5; z-index: -1;">☁️</div>
+    <div class="easter-egg parallax-cloud" style="top: 2200px; right: 2vw; font-size: 3rem; opacity: 0.7; z-index: -1;">☁️</div>
+    <div class="easter-egg parallax-fast" style="top: 900px; right: 20vw;" onclick="AudioEngine.playPop()">✨</div>
+    <div class="easter-egg parallax-slow" style="top: 1600px; left: 20vw;" onclick="AudioEngine.playPop()">🍀</div>
+    <div class="easter-egg parallax-fast" style="top: 3000px; left: 15vw;" onclick="AudioEngine.playPop()">🍁</div>
+
+    <!-- Navigation & Progress Bar -->
+    <nav class="top-nav">
+        <div class="logo">🚀 EPIC x SCIP</div>
+        <div class="progress-container">
+            <span class="progress-text">Mảnh ghép:</span>
+            <div class="puzzle-slots">
+                <div class="slot" id="slot-1"></div>
+                <div class="slot" id="slot-2"></div>
+                <div class="slot" id="slot-3"></div>
+                <div class="slot" id="slot-4"></div>
+                <div class="slot" id="slot-5"></div>
+                <div class="slot" id="slot-6"></div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Timeline Navigation -->
+    <div class="timeline-container">
+        <div class="timeline-dot" id="tl-dot-1" data-label="Trạm 1: Chuyển Động" onclick="document.getElementById('station-1').scrollIntoView({behavior:'smooth'})"></div>
+        <div class="timeline-dot" id="tl-dot-2" data-label="Trạm 2: Điện Năng" onclick="document.getElementById('station-2').scrollIntoView({behavior:'smooth'})"></div>
+        <div class="timeline-dot" id="tl-dot-3" data-label="Trạm 3: Hóa Học" onclick="document.getElementById('station-3').scrollIntoView({behavior:'smooth'})"></div>
+        <div class="timeline-dot" id="tl-dot-4" data-label="Trạm 4: Ảo Thuật" onclick="document.getElementById('station-4').scrollIntoView({behavior:'smooth'})"></div>
+        <div class="timeline-dot" id="tl-dot-5" data-label="Trạm 5: VEX IQ" onclick="document.getElementById('station-5').scrollIntoView({behavior:'smooth'})"></div>
+        <div class="timeline-dot" id="tl-dot-6" data-label="Trạm 6: Sáng Tạo" onclick="document.getElementById('station-6').scrollIntoView({behavior:'smooth'})"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero" style="position: relative; overflow: hidden;">
+        <!-- Đồ trang trí Mùa Thu & STEM lơ lửng xung quanh -->
+        <div class="parallax-slow" style="position: absolute; top: 12%; left: 8%; font-size: 3.8rem; opacity: 0.75;">🍁</div>
+        <div class="parallax-fast" style="position: absolute; top: 18%; right: 10%; font-size: 4rem; opacity: 0.85;">🚀</div>
+        <div class="parallax-bounce" style="position: absolute; bottom: 25%; left: 6%; font-size: 3.5rem; opacity: 0.75;">🔬</div>
+        <div class="parallax-drift" style="position: absolute; bottom: 20%; right: 8%; font-size: 3.8rem; opacity: 0.8;">🧬</div>
+        <div class="parallax-fast" style="position: absolute; top: 40%; left: 3%; font-size: 2.8rem; opacity: 0.7;">⚛️</div>
+        <div class="parallax-slow" style="position: absolute; top: 45%; right: 4%; font-size: 2.8rem; opacity: 0.7;">🍂</div>
+        <div class="parallax-cloud" style="position: absolute; top: 10%; right: 25%; font-size: 5rem; opacity: 0.35;">☁️</div>
+        <div class="parallax-cloud" style="position: absolute; bottom: 12%; left: 20%; font-size: 4.5rem; opacity: 0.3;">☁️</div>
+
+        <!-- Badge SCIP 2026 -->
+        <div class="hero-badge">🍁 CHÀO MỪNG ĐẾN VỚI SCIP GIA LAI <span style="background: #FFF; padding: 2px 10px; border-radius: 4px; box-shadow: 2px 2px 0 rgba(0,0,0,0.15); display: inline-block; margin-left: 5px;"><span class="text-gradient-blue-purple" style="font-weight: 900;">2026</span></span></div>
+        
+        <!-- Tiêu đề nổi bật -->
+        <h1>NGÀY HỘI<br><span class="text-orange">KHÁM PHÁ STEM</span></h1>
+        
+        <p class="hero-subtitle">Khởi động hành trình chinh phục khoa học & Khám phá 6 trạm tương tác!</p>
+
+        <!-- Thẻ tính năng nổi bật (Chips) -->
+        <div class="hero-features">
+            <div class="feature-chip">🧪 6 Trạm Thử Thách</div>
+            <div class="feature-chip">🧩 Thu Thập Mảnh Ghép</div>
+            <div class="feature-chip">📜 Nhận Chứng Nhận</div>
+        </div>
+
+        <!-- Nút CTA Bắt Đầu Hành Trình -->
+        <button class="btn-hero-start" onclick="document.getElementById('station-1').scrollIntoView({behavior:'smooth'})">
+            🚀 BẮT ĐẦU HÀNH TRÌNH KHÁM PHÁ
+        </button>
+
+        <!-- Chỉ báo cuộn xuống -->
+        <div class="scroll-indicator" onclick="document.getElementById('station-1').scrollIntoView({behavior:'smooth'})">
+            <span>Cuộn xuống trạm 1</span>
+            <div class="bounce-arrow">👇</div>
+        </div>
+    </header>
+
+    <!-- Bản đồ hành trình 6 trạm -->
+    <main class="map-container">
+        
+        <!-- Trạm 1 -->
+        <section class="station card bg-yellow" id="station-1">
+            <div class="station-number">01</div>
+            <h2>Trạm Chuyển Động</h2>
+            <p>Chế tạo và phóng tên lửa nước</p>
+            <div class="simulation-placeholder">
+                <span class="placeholder-text">[Đồ họa mô phỏng Tên lửa nước sẽ nằm ở đây]</span>
+            </div>
+            <button class="btn btn-primary">Phóng tên lửa</button>
+        </section>
+
+        <!-- Dấu chân người bước đi chéo (Trạm 1 Trái -> Trạm 2 Phải) -->
+        <div class="footprint-trail">
+            <svg class="footprint-svg-trail" viewBox="0 0 400 130" width="100%" height="100%">
+                <!-- Left & Right Footprints winding L -> R -->
+                <g transform="translate(60, 15) rotate(35)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(95, 25) rotate(40)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(130, 38) rotate(45)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(165, 52) rotate(40)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(200, 68) rotate(30)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(235, 82) rotate(25)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(270, 95) rotate(35)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(305, 108) rotate(40)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(340, 118) rotate(35)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+            </svg>
+        </div>
+
+        <!-- Trạm 2: Cơ năng -> Điện năng -->
+        <section class="station card bg-blue" id="station-2">
+            <div class="station-number">02</div>
+            <h2>Trạm Năng Lượng</h2>
+            <p>Biến đổi cơ năng thành điện năng</p>
+            <div class="simulation-placeholder">
+                <span class="placeholder-text">[Mô phỏng: Thổi gió (Mic/Click) -> Quay cánh quạt -> Sáng LED]</span>
+            </div>
+            <button class="btn btn-primary">Tạo luồng gió</button>
+        </section>
+
+        <!-- Dấu chân người bước đi chéo (Trạm 2 Phải -> Trạm 3 Trái) -->
+        <div class="footprint-trail">
+            <svg class="footprint-svg-trail" viewBox="0 0 400 130" width="100%" height="100%">
+                <!-- Left & Right Footprints winding R -> L -->
+                <g transform="translate(340, 15) rotate(-35)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(305, 25) rotate(-40)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(270, 38) rotate(-45)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(235, 52) rotate(-40)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(200, 68) rotate(-30)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(165, 82) rotate(-25)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(130, 95) rotate(-35)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(95, 108) rotate(-40)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(60, 118) rotate(-35)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+            </svg>
+        </div>
+
+        <!-- Trạm 3: Baking Soda + CH3COOH -->
+        <section class="station card bg-red" id="station-3">
+            <div class="station-number">03</div>
+            <h2>Trạm Hóa Học Vui</h2>
+            <p>Bong bóng tự phồng & Đèn Lava</p>
+            <div class="simulation-placeholder">
+                <span class="placeholder-text">[Đồ họa mô phỏng Chai giấm & Baking Soda]</span>
+            </div>
+            <button class="btn btn-primary">Trộn dung dịch</button>
+        </section>
+
+        <!-- Dấu chân người bước đi chéo (Trạm 3 Trái -> Trạm 4 Phải) -->
+        <div class="footprint-trail">
+            <svg class="footprint-svg-trail" viewBox="0 0 400 130" width="100%" height="100%">
+                <g transform="translate(60, 15) rotate(35)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(95, 25) rotate(40)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(130, 38) rotate(45)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(165, 52) rotate(40)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(200, 68) rotate(30)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(235, 82) rotate(25)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(270, 95) rotate(35)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(305, 108) rotate(40)"><path d="M 0,-8 C -3,-8 -3,-4 -5,1 C -6,6 -6,11 -3,11 C 1,11 4,8 5,3 Z M 0,14 C -4,14 -6,16 -5,19 C -3,21 0,21 2,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+                <g transform="translate(340, 118) rotate(35)"><path d="M 0,-8 C -4,-8 -6,-3 -5,3 C -4,8 -1,11 3,11 C 6,11 6,6 5,1 Z M 0,14 C -3,14 -4,16 -2,19 C 0,21 3,21 5,19 Z" fill="#1A1A1A" opacity="0.85"/></g>
+            </svg>
+        </div>
+
+        <!-- Trạm 4: Methylene Blue -->
+        <section class="station card bg-orange" id="station-4">
+            <div class="station-number">04</div>
+            <h2>Trạm Ảo Thuật</h2>
+            <p>Sự đổi màu kỳ diệu của Methylene Blue</p>
+            <div class="simulation-placeholder">
+                <span class="placeholder-text">[Đồ họa mô phỏng Bình cầu lắc đổi màu]</span>
+            </div>
+            <button class="btn btn-primary">Lắc bình nghiệm</button>
+        </section>
+
+        <!-- Dấu chân người bước đi uốn lượn liên tục (FootprintEngine) -->
+        <div class="footprint-trail" id="trail-2"></div>
+
+        <!-- Trạm 5: VEX IQ -->
+        <section class="station card bg-green" id="station-5">
+            <div class="station-number">05</div>
+            <h2>Trạm VEX IQ</h2>
+            <p>Lập trình hướng đi bằng thẻ màu sắc</p>
+            <div class="simulation-placeholder">
+                <span class="placeholder-text">[Mô phỏng bảng mạch: Kéo thả thẻ Đỏ, Vàng, Xanh điều khiển Robot]</span>
+            </div>
+            <button class="btn btn-primary">Chạy thử lệnh</button>
+        </section>
+
+        <!-- Dấu chân người bước đi uốn lượn liên tục (FootprintEngine) -->
+        <div class="footprint-trail" id="trail-1"></div>
+
+        <!-- Trạm 6 -->
+        <section class="station card bg-white" id="station-6">
+            <div class="station-number">06</div>
+            <h2>Trạm Sáng Tạo</h2>
+            <p>Gieo mầm cây & Trang trí móc khóa</p>
+            <div class="simulation-placeholder">
+                <span class="placeholder-text">[Đồ họa mô phỏng Đất & Hạt mầm]</span>
+            </div>
+            <button class="btn btn-primary">Gieo mầm</button>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <h2 class="slogan">"Trao trải nghiệm - Khơi sáng tạo - Gieo yêu thương"</h2>
+        <p style="margin-bottom: 2px;">Một dự án của <a href="https://www.facebook.com/makeitepic.qhqn" target="_blank">EPIC - CLB STEM Quốc Học Quy Nhơn</a></p>
+        <p style="margin-top: 2px;">Kết hợp với <a href="https://www.facebook.com/DoantruongQuocHocQN" target="_blank">Đoàn trường THPT Quốc Học Quy Nhơn</a></p>
+    </footer>
+
+    <!-- Modal Nhập tên (hiện trước khi xem chứng nhận) -->
+    <div id="name-input-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="font-size: 2.5rem; color: var(--red); margin-bottom: 20px;">🎉 CHÚC MỪNG! 🎉</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--white);">Bạn đã hoàn thành xuất sắc 6 trạm thử thách Khoa học!<br>Nhập họ tên để nhận chứng nhận của bạn nhé.</p>
+
+            <form id="name-input-form">
+                <input
+                    type="text"
+                    id="participant-name-input"
+                    class="name-input"
+                    placeholder="Nhập họ và tên của bạn..."
+                    maxlength="60"
+                    autocomplete="off"
+                    required
+                >
+                <p id="name-input-error" class="name-input-error hidden">Vui lòng nhập tên của bạn trước khi tiếp tục.</p>
+                <button type="submit" class="btn btn-primary" style="margin-top: 20px;">✨ NHẬN CHỨNG NHẬN</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Chứng nhận -->
+    <div id="cert-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="font-size: 2.5rem; color: var(--red); margin-bottom: 20px;">🎉 CHÚC MỪNG! 🎉</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--white);">Bạn đã hoàn thành xuất sắc 6 trạm thử thách Khoa học!</p>
+            
+            <div style="margin-bottom: 30px;">
+                <img id="cert-img" src="img/cert_template.png" alt="Chứng nhận" style="max-width: 100%; border-radius: 8px; border: 4px solid var(--border-color); box-shadow: 4px 4px 0 var(--border-color);">
+            </div>
+            
+            <a id="cert-download-link" href="img/cert_template.png" download="ChungNhan_SCIP_GIALAI.png" class="btn btn-primary" style="text-decoration: none; display: inline-block;">📥 TẢI CHỨNG NHẬN</a>
+        </div>
+    </div>
+
+    
+    <!-- Thư viện GSAP cho Animation mượt mà -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Các file Logic Modules -->
+    <script src="js/certificate.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/station_1.js"></script>
+    <script src="js/station_2.js"></script>
+    <script src="js/station_3.js"></script>
+    <script src="js/station_4.js"></script>
+    <script src="js/station_5.js"></script>
+    <script src="js/station_6.js"></script>
+</body>
+</html>
