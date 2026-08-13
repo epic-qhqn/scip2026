@@ -914,21 +914,30 @@ footer a:hover {
 
     .simulation-placeholder {
         margin: 20px 0 !important;
-        min-height: 320px !important;
+        min-height: 380px !important;
         padding: 10px !important;
         overflow: hidden !important;
         max-width: 100% !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        align-items: center !important;
     }
 
-    /* Scale Trạm 3 (5 đèn lava) vừa vặn chậu card trên điện thoại iPhone 14 */
+    /* Adaptive Scale Trạm 3 (5 đèn lava) */
     #station-3 .simulation-placeholder>div:nth-child(2) {
-        transform: scale(0.7) !important;
+        transform: scale(calc(100vw / 500)) !important;
         transform-origin: bottom center !important;
     }
 
-    /* Scale Trạm 5 VEX IQ Robot & Nút bấm */
+    /* Adaptive Scale Trạm 4 (Bình ảo thuật) */
+    #s4-flask-wrapper {
+        transform: scale(calc(100vw / 400)) !important;
+        transform-origin: bottom center !important;
+    }
+
+    /* Adaptive Scale Trạm 5 VEX IQ Robot & Nút bấm */
     #s5-map {
-        transform: scale(0.82) !important;
+        transform: scale(calc(100vw / 450)) !important;
         transform-origin: center center !important;
     }
 
@@ -1035,7 +1044,7 @@ footer a:hover {
     }
 }
 
-/* Touch manipulation to prevent double tap zoom */
-button, .btn, .s5-color-btn, .timeline-dot, .easter-egg, .scroll-indicator {
+/* Touch manipulation to prevent double tap zoom across whole page on iOS */
+* {
     touch-action: manipulation;
 }
