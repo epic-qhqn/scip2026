@@ -25,17 +25,18 @@ const Station3 = {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'flex-end',
+            paddingBottom: '15px',
             background: '#FFF5F5',
             overflow: 'hidden'
         });
         
         this.container.innerHTML = `
-            <div style="position: absolute; top: 5px; left: 10px; z-index: 10; font-family: 'Lexend', sans-serif; color: #1A1A1A; text-align: left;">
+            <div style="position: absolute; top: 15px; left: 20px; z-index: 10; font-family: 'Lexend', sans-serif; color: #1A1A1A; text-align: left;">
                 <div class="sim-text">🧪 Phản ứng tạo khí CO₂</div>
                 <div class="sim-subtext">NaHCO₃ (Baking soda) + CH₃COOH (Giấm)</div>
             </div>
             
-            <div style="position: relative; width: 140px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px; transform: scale(1.1); transform-origin: bottom center;">
+            <div style="position: relative; width: 140px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 0px; transform: scale(1.1); transform-origin: bottom center; bottom: 0px;">
                 
                 <!-- Decor nền -->
                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.1; background-image: radial-gradient(circle at 20% 30%, var(--red) 2px, transparent 2px), radial-gradient(circle at 80% 60%, var(--blue) 2px, transparent 2px); background-size: 50px 50px; z-index: 0;"></div>

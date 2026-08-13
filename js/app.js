@@ -211,6 +211,7 @@ const LeafEngine = {
     },
     
     createLeaf() {
+        const size = this.sizes[Math.floor(Math.random() * this.sizes.length)];
         const leaf = document.createElement('div');
         leaf.classList.add('leaf-wrapper'); // Wrapper cho sway
         
