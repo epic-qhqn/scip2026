@@ -158,7 +158,7 @@ const Station1 = {
         
         if (this.waterLevel >= 30 && this.waterLevel <= 40 && this.pressure >= 40 && this.pressure <= 70) {
             // BAY CỰC ĐỈNH - MỞ KHÓA MẢNH GHÉP
-            targetY = -500; // Bay vút ra khỏi khung hình
+            targetY = -800; // Bay vút ra khỏi khung hình
             isPerfect = true;
         } else if (this.waterLevel > 60) {
             // QUÁ NẶNG

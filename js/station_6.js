@@ -80,7 +80,7 @@ const Station6 = {
                 </div>
 
                 <!-- Bình tưới nước SVG (Ẩn bên trên) -->
-                <div id="s6-watering-can" style="position: absolute; top: -150px; left: 50%; transform: translateX(-75px) rotate(-20deg); width: 150px; height: 125px; z-index: 6; opacity: 0;">
+                <div id="s6-watering-can" style="position: absolute; top: -150px; left: 50%; margin-left: -5px; transform: rotate(-20deg); width: 150px; height: 125px; z-index: 6; opacity: 0;">
                     <svg viewBox="0 0 100 80" width="100%" height="100%">
                         <path d="M40,20 L80,20 L90,70 L30,70 Z" fill="#29B6F6" stroke="#1A1A1A" stroke-width="4"/>
                         <path d="M35,45 L5,20" fill="none" stroke="#1A1A1A" stroke-width="6" stroke-linecap="round"/>

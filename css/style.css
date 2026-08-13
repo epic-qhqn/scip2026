@@ -42,7 +42,7 @@ html, body {
     height: 100svh;
     overflow-y: auto;
     overflow-x: hidden;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
 }
@@ -408,7 +408,8 @@ body {
     background: rgba(255, 255, 255, 0.4);
     border: 3px dashed var(--border-color);
     border-radius: 16px;
-    height: clamp(300px, 45dvh, 450px);
+    min-height: clamp(300px, 45dvh, 450px);
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -422,7 +423,11 @@ body {
     overflow: hidden;
     overscroll-behavior: none;
     position: relative;
-    touch-action: none;
+    touch-action: pan-y;
+}
+
+#station-1 .simulation-placeholder {
+    overflow: visible !important;
 }
 
 .sim-text {
@@ -936,7 +941,8 @@ footer a:hover {
 
     .simulation-placeholder {
         margin: 20px 0 !important;
-        min-height: 380px !important;
+        min-height: 400px !important;
+        height: auto !important;
         padding: 10px !important;
         overflow: hidden !important;
         max-width: 100% !important;
