@@ -188,10 +188,10 @@ const Station6 = {
           .to('#s6-drops', { y: 50, opacity: 0, duration: 0.6, repeat: 2 })
           // 3. Bình tưới bay đi
           .to('#s6-watering-can', { rotation: -20, opacity: 0, y: -100, duration: 0.5 })
-          // 4. Hạt giống nứt ra (ẩn đi), Cây con lớn lên, Mặt trời hiện ra
+          // 4. Hạt giống nứt ra (ẩn đi), Cây con lớn lên tới kích thước hoàn chỉnh, Mặt trời hiện ra
           .to('#s6-seed', { opacity: 0, duration: 0.2 })
           .to('#s6-sun', { opacity: 1, rotation: 45, duration: 2 }, "-=0.2")
-          .to('#s6-plant', { scaleY: 1, duration: 2.5, ease: "elastic.out(1, 0.5)" }, "-=2")
+          .to('#s6-plant', { scaleX: 1.8, scaleY: 1.8, duration: 2.5, ease: "elastic.out(1, 0.5)" }, "-=2")
           .call(() => {
               this.btnAction.innerText = "✅ ĐÃ ƯƠM MẦM THÀNH CÔNG";
               this.btnAction.style.background = "#4CAF50";
@@ -200,21 +200,18 @@ const Station6 = {
                   window.RewardSystem.unlockPiece(6);
               }
               
-              // Giai đoạn mọc lớn thêm và spawn đồ vật sau 3s
-              setTimeout(() => this.spawnDecorations(), 3000);
+              // Spawn đồ vật trang trí sau 1.5s (cây đã cố định kích thước, charm không bị nở to)
+              setTimeout(() => this.spawnDecorations(), 1500);
           });
     },
     
     spawnDecorations() {
-        if(!window.gsap) return;
-        
-        // Phóng to cây liên tục rất chậm (lớn lên theo thời gian thực, 15s để người dùng kịp thấy)
-        gsap.to('#s6-plant', { scaleX: 2.2, scaleY: 2.2, transformOrigin: "bottom center", duration: 15, ease: "power1.out" });
-        
         const tray = document.getElementById('s6-items-tray');
+        if(!tray) return;
         tray.innerHTML = '';
         
-        const items = ['🍎', '🍎', '🎀'];
+        // Đổi 1 quả táo thành cục vàng (🪙)
+        const items = ['🍎', '🪙', '🎀'];
         items.forEach((emoji, i) => {
             const el = document.createElement('div');
             el.id = 's6-item-' + i;
