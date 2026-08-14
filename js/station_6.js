@@ -89,7 +89,7 @@ const Station6 = {
                 </div>
                 
                 <!-- Giọt nước (Đưa ra ngoài để không bị xoay chéo) -->
-                <div id="s6-drops" style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50px); opacity: 0; z-index: 5;">
+                <div id="s6-drops" style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); opacity: 0; z-index: 5;">
                     <div style="width:8px; height:16px; background:#03A9F4; margin: 4px; border-radius:4px;"></div>
                     <div style="width:8px; height:16px; background:#03A9F4; margin: 4px; border-radius:4px;"></div>
                     <div style="width:8px; height:16px; background:#03A9F4; margin: 4px; border-radius:4px;"></div>

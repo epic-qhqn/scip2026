@@ -44,7 +44,7 @@ const Station3 = {
                 <div style="position: absolute; bottom: 30px; left: -80px; font-size: 3.5rem; opacity: 0.2;">🔬</div>
 
                 <!-- Bong bóng (Trên miệng chai) -->
-                <div id="s3-balloon" style="position: absolute; top: 40px; width: 80px; height: 100px; background: #E03C31; border: 3px solid #1A1A1A; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; transform: scale(0.2); transform-origin: bottom center; z-index: 3; display: flex; justify-content: center; align-items: center;">
+                <div id="s3-balloon" style="position: absolute; top: 68px; left: 50%; margin-left: -40px; width: 80px; height: 100px; background: #E03C31; border: 3px solid #1A1A1A; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; transform: scale(0.2); transform-origin: bottom center; z-index: 3; display: flex; justify-content: center; align-items: center;">
                     <!-- Highlight bong bóng -->
                     <div style="position: absolute; top: 15px; left: 15px; width: 15px; height: 25px; background: rgba(255,255,255,0.4); border-radius: 50%; transform: rotate(-30deg);"></div>
                     <span id="s3-co2-text" style="color: white; font-weight: bold; font-family: Lexend; opacity: 0;">CO₂</span>
@@ -110,7 +110,7 @@ const Station3 = {
                 </div>
 
                 <!-- Nút buộc bong bóng -->
-                <div style="position: absolute; top: 135px; width: 25px; height: 10px; background: #E03C31; border: 3px solid #1A1A1A; border-radius: 3px; z-index: 2;"></div>
+                <div style="position: absolute; top: 158px; left: 50%; margin-left: -12.5px; width: 25px; height: 14px; background: #E03C31; border: 3px solid #1A1A1A; border-radius: 3px; z-index: 2;"></div>
 
                 <!-- Bình tam giác (Erlenmeyer Flask) -->
                 <div style="position: relative; width: 120px; height: 140px; z-index: 1;">
