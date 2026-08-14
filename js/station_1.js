@@ -211,9 +211,11 @@ const Station1 = {
     /**
      * Bay tên lửa (bản sao position:fixed) từ vị trí thật trên màn hình
      * tới ngay phía trên-trái chữ "NGÀY HỘI" ở hero — tính trực tiếp từ
-     * vị trí thật của tiêu đề lúc chạy (getBoundingClientRect), không qua
-     * điểm neo trung gian. Không tự cuộn trang — toàn bộ chuyển động chỉ
-     * đến từ chính tên lửa.
+     * vị trí thật của tiêu đề lúc chạy (getBoundingClientRect). Trước khi
+     * bay, phun hiệu ứng hơi nước ở đế tên lửa trong ~1 giây. Đường bay là
+     * một đường THẲNG. Không tự cuộn trang: nếu đang cuộn xuống trạm khác,
+     * chữ "NGÀY HỘI" không nằm trong màn hình, nên tên lửa sẽ bay ra ngoài
+     * khung nhìn — đây là hành vi có chủ đích.
      */
     flyToHeroTarget() {
         const heroTitle = document.querySelector('header.hero h1');
@@ -230,7 +232,8 @@ const Station1 = {
         const scaleTarget = targetSize / rocketRect.width;
         const endWidth = rocketRect.width * scaleTarget;
         const endHeight = rocketRect.height * scaleTarget;
-        const endLeft = titleRect.left - 10;
+        // Bay THẲNG LÊN TRÊN: giữ nguyên vị trí ngang, chỉ đổi độ cao — không
+        // có chuyển động ngang nên hoàn toàn không lắc lư.
         const endTop = titleRect.top - 15;
         
         // Tạo bản sao bay tự do trên toàn trang (không bị giới hạn bởi khung trạm 1)
@@ -250,44 +253,79 @@ const Station1 = {
         document.body.appendChild(clone);
         this.rocket.style.opacity = '0';
         
-        // Vòng cung NHẸ từ vị trí xuất phát thẳng tới đích cạnh "Ngày hội":
-        // điểm uốn giữa chỉ đẩy cao hơn đôi chút so với 2 đầu, tạo độ cong
-        // vừa phải chứ không gấp khúc.
-        const arcMidLeft = (rocketRect.left + endLeft) / 2;
-        const arcMidTop = Math.min(rocketRect.top, endTop) - 90;
-        const PHASE1_DURATION = 0.6;
-        const PHASE2_DURATION = 0.5;
+        const STEAM_DURATION = 1; // hiệu ứng hơi nước trước khi bay, tính bằng giây
+        const FLIGHT_DURATION = 1.1;
         
-        // Góc đáp cố định: hướng lên, nghiêng 45° so với phương ngang
-        // (tên lửa mặc định hướng "lên" = rotation 0 theo phương thẳng đứng,
-        // nên nghiêng 45° so với phương ngang tương đương xoay 45° so với dọc).
-        const LANDING_ROTATION = 45;
+        // Hiệu ứng hơi nước phun ra ở đế tên lửa trong ~1 giây, trước khi
+        // tên lửa thật sự cất cánh.
+        this.spawnSteam(rocketRect, STEAM_DURATION);
         
-        const flightTl = gsap.timeline({
+        // Bay THẲNG LÊN, không xoay/nghiêng — chỉ đổi top và kích thước, nên
+        // hoàn toàn ổn định, không có lý do gì để lắc lư.
+        gsap.to(clone, {
+            top: endTop,
+            width: endWidth,
+            height: endHeight,
+            duration: FLIGHT_DURATION,
+            delay: STEAM_DURATION,
+            ease: "power4.out",
             onComplete: () => {
                 gsap.to(clone, { scale: 0.92, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 });
                 if(window.AudioEngine) AudioEngine.playPop();
             }
         });
+    },
+    
+    /**
+     * Phun các đốm "hơi nước" nhỏ ở đế tên lửa trong khoảng `duration` giây,
+     * trước khi tên lửa thật sự cất cánh — mô phỏng hơi nước áp suất xì ra
+     * trước lúc phóng.
+     */
+    spawnSteam(rocketRect, duration) {
+        if(!window.gsap) return;
+        const baseX = rocketRect.left + rocketRect.width / 2;
+        const baseY = rocketRect.top + rocketRect.height;
+        const puffCount = 6;
         
-        // 1) Bay qua điểm uốn giữa — vòng cung nhẹ, bắt đầu nghiêng dần
-        flightTl.to(clone, {
-            left: arcMidLeft,
-            top: arcMidTop,
-            rotation: LANDING_ROTATION * 0.5,
-            duration: PHASE1_DURATION,
-            ease: "power2.out"
-        });
-        // 2) Hạ cánh vào đúng vị trí cạnh "Ngày hội", nghiêng cố định 45°
-        flightTl.to(clone, {
-            left: endLeft,
-            top: endTop,
-            width: endWidth,
-            height: endHeight,
-            rotation: LANDING_ROTATION,
-            duration: PHASE2_DURATION,
-            ease: "power2.out"
-        });
+        for(let i = 0; i < puffCount; i++) {
+            const puff = document.createElement('div');
+            const size = 14 + Math.random() * 10;
+            Object.assign(puff.style, {
+                position: 'fixed',
+                left: (baseX - size / 2) + 'px',
+                top: (baseY - size / 2) + 'px',
+                width: size + 'px',
+                height: size + 'px',
+                borderRadius: '50%',
+                background: 'rgba(255,255,255,0.85)',
+                boxShadow: '0 0 6px rgba(255,255,255,0.5)',
+                zIndex: '99998',
+                pointerEvents: 'none',
+                opacity: '0'
+            });
+            document.body.appendChild(puff);
+            
+            const delay = (duration / puffCount) * i;
+            const driftX = (Math.random() - 0.5) * 50;
+            const driftY = 15 + Math.random() * 20;
+            
+            gsap.to(puff, {
+                opacity: 0.85,
+                duration: 0.15,
+                delay,
+                onComplete: () => {
+                    gsap.to(puff, {
+                        x: driftX,
+                        y: driftY,
+                        scale: 1.8 + Math.random() * 0.8,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: "power1.out",
+                        onComplete: () => puff.remove()
+                    });
+                }
+            });
+        }
     },
     
     reset() {
