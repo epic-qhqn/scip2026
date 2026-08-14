@@ -178,7 +178,7 @@ const Station1 = {
             tl.to(this.rocket, { x: -5, duration: 0.05, yoyo: true, repeat: 5 });
             
             if(isPerfect) {
-                // Bay chính xác vào vòng tròn xanh cạnh chữ "NGÀY HỘI" ở hero
+                // Bay tới đúng vị trí cạnh chữ "NGÀY HỘI" ở hero (tính theo vị trí thật lúc chạy)
                 tl.add(() => this.flyToHeroTarget());
             } else {
                 tl.to(this.rocket, { 
@@ -219,7 +219,7 @@ const Station1 = {
         const heroTitle = document.querySelector('header.hero h1');
         
         if(!heroTitle || !window.gsap) {
-            gsap.to(this.rocket, { y: -800, duration: 1, ease: "power4.out" });
+            if(window.gsap) gsap.to(this.rocket, { y: -800, duration: 1, ease: "power4.out" });
             return;
         }
         
