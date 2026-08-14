@@ -100,25 +100,25 @@ const Station4 = {
         
         const tl = gsap.timeline();
         
-        // 1. Hiệu ứng lắc dữ dội (Mô phỏng lắc tay)
+        // 1. Hiệu ứng lắc (Mô phỏng lắc tay)
         tl.to(this.flaskWrapper, {
-            rotation: 25, x: 15, duration: 0.1, yoyo: true, repeat: 15, ease: "none"
+            rotation: 25, x: 15, duration: 0.1, yoyo: true, repeat: 22, ease: "none"
         })
         // 2. Chuyển sang màu XANH trong lúc lắc
         gsap.to(this.liquid, {
-            fill: "#2196F3", duration: 1.5, ease: "power2.out"
+            fill: "#2196F3", duration: 2.25, ease: "power2.out"
         });
         
         // 3. Sau khi lắc xong (Để yên bình)
         tl.to(this.flaskWrapper, {
-            rotation: 0, x: 0, duration: 0.5,
+            rotation: 0, x: 0, duration: 0.6,
             onComplete: () => {
                 this.btnShake.innerText = "⏳ ĐỂ YÊN & QUAN SÁT...";
                 this.btnShake.style.background = "#FF9800";
                 
-                // 4. Chờ 3 giây để oxy thoát ra, dung dịch dần về màu HỒNG
+                // 4. Chờ oxy thoát ra, dung dịch dần về màu HỒNG (tăng 1.5 lần thời gian: 9s)
                 gsap.to(this.liquid, {
-                    fill: "#E91E63", duration: 6, delay: 1, ease: "power1.inOut",
+                    fill: "#E91E63", duration: 9, delay: 1.5, ease: "power1.inOut",
                     onComplete: () => {
                         this.btnShake.innerText = "✅ THÍ NGHIỆM THÀNH CÔNG";
                         this.btnShake.style.background = "#4CAF50";

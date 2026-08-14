@@ -114,8 +114,8 @@ const Station2 = {
             e.preventDefault(); // Tránh bị double action khi có cả touch và click
             if(window.AudioEngine) AudioEngine.playWind();
             
-            // Mỗi cú nhấp / chạm tăng 10% năng lượng
-            this.power = Math.min(100, this.power + 10);
+            // Mỗi cú nhấp / chạm tăng 6% năng lượng (tăng độ khó)
+            this.power = Math.min(100, this.power + 6);
             this.updateUI();
             
             // Check win

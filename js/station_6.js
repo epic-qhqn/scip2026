@@ -234,44 +234,95 @@ const Station6 = {
             });
             
             // Hỗ trợ Touch (Mobile/Tablet)
-            let touchX, touchY;
+            let touchX = 0, touchY = 0;
+            
             el.addEventListener('touchstart', (e) => {
                 if(window.AudioEngine) AudioEngine.playClick();
                 e.preventDefault();
-                el.style.position = 'absolute';
-                el.style.zIndex = 1000;
-                document.body.appendChild(el); 
-                touchX = e.touches[0].clientX;
-                touchY = e.touches[0].clientY;
-                el.style.left = (touchX - 17) + 'px';
-                el.style.top = (touchY - 17) + 'px';
+                e.stopPropagation();
+                
+                const touch = e.touches[0];
+                touchX = touch.clientX;
+                touchY = touch.clientY;
+                
+                // Dùng position: fixed để vật phẩm nằm đúng ngay dưới ngón tay trên màn hình (không phụ thuộc vị trí cuộn trang)
+                el.style.position = 'fixed';
+                el.style.zIndex = '99999';
+                el.style.left = (touchX - 20) + 'px';
+                el.style.top = (touchY - 20) + 'px';
+                el.style.transform = 'scale(1.25)';
+                document.body.appendChild(el);
             }, {passive: false});
 
             el.addEventListener('touchmove', (e) => {
                 e.preventDefault();
-                touchX = e.touches[0].clientX;
-                touchY = e.touches[0].clientY;
-                el.style.left = (touchX - 17) + 'px';
-                el.style.top = (touchY - 17) + 'px';
+                e.stopPropagation();
+                
+                const touch = e.touches[0];
+                touchX = touch.clientX;
+                touchY = touch.clientY;
+                
+                el.style.left = (touchX - 20) + 'px';
+                el.style.top = (touchY - 20) + 'px';
             }, {passive: false});
 
             el.addEventListener('touchend', (e) => {
-                const dropzone = document.getElementById('s6-tree-dropzone');
-                const rect = dropzone.getBoundingClientRect();
+                e.preventDefault();
+                e.stopPropagation();
                 
-                if (touchX >= rect.left && touchX <= rect.right && touchY >= rect.top && touchY <= rect.bottom) {
+                const dropzone = document.getElementById('s6-tree-dropzone');
+                const plant = document.getElementById('s6-plant');
+                const targetRect = plant ? plant.getBoundingClientRect() : (dropzone ? dropzone.getBoundingClientRect() : null);
+                
+                let isInside = false;
+                if (targetRect) {
+                    // Vùng nhận diện rộng rãi cho ngón tay trên mobile
+                    isInside = (touchX >= targetRect.left - 40 && touchX <= targetRect.right + 40 &&
+                                touchY >= targetRect.top - 40 && touchY <= targetRect.bottom + 40);
+                }
+                
+                if (isInside && dropzone) {
                     if(window.AudioEngine) AudioEngine.playDrop();
                     dropzone.appendChild(el);
-                    const plantScale = (window.gsap && gsap.getProperty('#s6-plant', 'scale')) || 1;
-                    el.style.left = ((touchX - rect.left) / plantScale - 17) + 'px';
-                    el.style.top = ((touchY - rect.top) / plantScale - 17) + 'px';
-                    if(window.gsap) gsap.fromTo(el, {scale:0}, {scale:1, duration: 0.5, ease: "back.out"});
+                    
+                    const plantScale = (window.gsap && gsap.getProperty('#s6-plant', 'scaleX')) || 1;
+                    const dRect = dropzone.getBoundingClientRect();
+                    
+                    el.style.position = 'absolute';
+                    el.style.zIndex = '10';
+                    el.style.left = Math.max(5, Math.min(75, (touchX - dRect.left) / plantScale - 15)) + 'px';
+                    el.style.top = Math.max(10, Math.min(130, (touchY - dRect.top) / plantScale - 15)) + 'px';
+                    el.style.transform = 'none';
+                    el.style.margin = '0';
+                    
+                    if(window.gsap) gsap.fromTo(el, {scale: 0}, {scale: 1, duration: 0.4, ease: "back.out(2)"});
                 } else {
+                    // Trả về khay chứa nếu thả ra ngoài
                     const tray = document.getElementById('s6-items-tray');
-                    tray.appendChild(el);
-                    el.style.position = 'relative';
-                    el.style.left = 'auto';
-                    el.style.top = 'auto';
+                    if (tray) {
+                        tray.appendChild(el);
+                        el.style.position = 'relative';
+                        el.style.left = 'auto';
+                        el.style.top = 'auto';
+                        el.style.zIndex = '7';
+                        el.style.transform = 'none';
+                    }
+                }
+            }, {passive: false});
+            
+            // Hỗ trợ Chạm/Click trực tiếp để gắn ngay lên cây (tiện lợi cho Mobile)
+            el.addEventListener('click', () => {
+                const dropzone = document.getElementById('s6-tree-dropzone');
+                if (dropzone && el.parentElement !== dropzone) {
+                    if(window.AudioEngine) AudioEngine.playDrop();
+                    dropzone.appendChild(el);
+                    el.style.position = 'absolute';
+                    el.style.zIndex = '10';
+                    el.style.left = (15 + Math.random() * 55) + 'px';
+                    el.style.top = (20 + Math.random() * 85) + 'px';
+                    el.style.transform = 'none';
+                    el.style.margin = '0';
+                    if(window.gsap) gsap.fromTo(el, {scale: 0}, {scale: 1, duration: 0.4, ease: "back.out(2)"});
                 }
             });
             
@@ -279,7 +330,7 @@ const Station6 = {
             gsap.fromTo(el, {scale: 0}, {scale: 1, delay: i * 0.2, duration: 0.5, ease: "back.out"});
         });
         
-        this.btnAction.innerText = "🎨 KÉO THẢ ĐỒ TRANG TRÍ LÊN CÂY";
+        this.btnAction.innerText = "🎨 KÉO THẢ / CHẠM ĐỒ TRANG TRÍ LÊN CÂY";
     }
 };
 

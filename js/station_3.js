@@ -164,21 +164,21 @@ const Station3 = {
         
         if(!window.gsap) return;
         
-        // 1. Phản ứng sủi bọt (Chất lỏng dâng lên, bột tan ra)
-        gsap.to(liquid, { attr: { y: 30, height: 110 }, fill: "#FF7043", duration: 5, ease: "power1.inOut" });
-        gsap.to(powder, { opacity: 0, duration: 2, delay: 0.5 });
+        // 1. Phản ứng sủi bọt (Chất lỏng dâng lên, bột tan ra) - Tăng gấp đôi thời gian
+        gsap.to(liquid, { attr: { y: 30, height: 110 }, fill: "#FF7043", duration: 10, ease: "power1.inOut" });
+        gsap.to(powder, { opacity: 0, duration: 4, delay: 1 });
         
         // 2. Tạo bọt khí (Lava/Bubbles effect)
         this.spawnBubbles();
         
-        // 4. Bong bóng phình to ra từ cổ chai
+        // 3. Bong bóng phình to ra từ cổ chai (thời gian phồng tăng gấp đôi)
         gsap.to('#s3-balloon', { 
             scale: 1, 
-            transformOrigin: "bottom center", duration: 2, ease: "elastic.out(1, 0.3)",
+            transformOrigin: "bottom center", duration: 4, delay: 0.5, ease: "elastic.out(1, 0.4)",
             onComplete: () => {
                 this.btnMix.innerText = "✅ THÍ NGHIỆM THÀNH CÔNG";
                 this.btnMix.style.background = "#4CAF50";
-                gsap.to(co2Text, { opacity: 1, duration: 0.5 });
+                gsap.to(co2Text, { opacity: 1, duration: 0.8 });
                 
                 if(window.RewardSystem) {
                     window.RewardSystem.unlockPiece(3);
@@ -188,7 +188,7 @@ const Station3 = {
         
         // 4. Lắc nhẹ bình phản ứng
         gsap.to(this.container.querySelector('div[style*="width: 140px"]'), {
-            x: 2, rotation: 1, duration: 0.1, yoyo: true, repeat: 15
+            x: 2, rotation: 1, duration: 0.1, yoyo: true, repeat: 30
         });
     },
     
@@ -196,7 +196,7 @@ const Station3 = {
         const bubbleContainer = document.getElementById('s3-bubbles-container');
         if(!bubbleContainer) return;
         
-        for(let i=0; i<25; i++) {
+        for(let i=0; i<40; i++) {
             setTimeout(() => {
                 const bubble = document.createElement('div');
                 Object.assign(bubble.style, {
@@ -216,11 +216,11 @@ const Station3 = {
                     y: -150 - Math.random() * 50,
                     x: (Math.random() - 0.5) * 20,
                     opacity: 0,
-                    duration: 1.5 + Math.random() * 1.5,
+                    duration: 2.5 + Math.random() * 2,
                     ease: "power1.in",
                     onComplete: () => bubble.remove()
                 });
-            }, Math.random() * 2000); // Rải rác sinh ra trong 2 giây
+            }, Math.random() * 4000); // Rải rác sinh ra trong 4 giây (gấp đôi)
         }
     }
 };

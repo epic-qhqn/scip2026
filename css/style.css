@@ -497,25 +497,53 @@ body {
 ========================================= */
 footer {
     text-align: center;
-    padding: 15px 20px 15px;
-    margin-top: 20px;
+    padding: 12px 15px 10px;
+    margin-top: 15px;
     background: var(--white);
     border-top: 4px dashed var(--border-color);
-    scroll-snap-align: end;
 }
 
 .slogan {
-    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-size: clamp(1rem, 2vw, 1.4rem);
     color: var(--red);
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     line-height: 1.3;
 }
 
 footer p {
     font-size: clamp(0.6rem, 1vw, 0.8rem);
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
+}
+
+/* Màu hover riêng biệt tương ứng 4 logo */
+.badge-doantn {
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+.badge-doantn:hover {
+    background: #005BAC !important;
+}
+
+.badge-qh {
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+.badge-qh:hover {
+    background: #C62828 !important;
+}
+
+.badge-hlhtnvn {
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+.badge-hlhtnvn:hover {
+    background: #0084C9 !important;
+}
+
+.badge-epic {
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+.badge-epic:hover {
+    background: #FF6D00 !important;
 }
 
 footer a {
