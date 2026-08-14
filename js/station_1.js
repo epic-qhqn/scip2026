@@ -232,9 +232,10 @@ const Station1 = {
         const scaleTarget = targetSize / rocketRect.width;
         const endWidth = rocketRect.width * scaleTarget;
         const endHeight = rocketRect.height * scaleTarget;
-        // Bay THẲNG LÊN TRÊN: giữ nguyên vị trí ngang, chỉ đổi độ cao — không
-        // có chuyển động ngang nên hoàn toàn không lắc lư.
-        const endTop = titleRect.top - 15;
+        
+        // Vị trí nằm bên trái chữ "NGÀY HỘI" ở Hero
+        const endLeft = titleRect.left - endWidth * 0.75;
+        const endTop = titleRect.top + 5;
         
         // Tạo bản sao bay tự do trên toàn trang (không bị giới hạn bởi khung trạm 1)
         const clone = this.rocket.cloneNode(true);
@@ -253,27 +254,40 @@ const Station1 = {
         document.body.appendChild(clone);
         this.rocket.style.opacity = '0';
         
-        const STEAM_DURATION = 1; // hiệu ứng hơi nước trước khi bay, tính bằng giây
-        const FLIGHT_DURATION = 1.1;
+        const STEAM_DURATION = 0.8; // hiệu ứng hơi nước trước khi bay
         
-        // Hiệu ứng hơi nước phun ra ở đế tên lửa trong ~1 giây, trước khi
-        // tên lửa thật sự cất cánh.
+        // Phun hiệu ứng hơi nước ở đế tên lửa
         this.spawnSteam(rocketRect, STEAM_DURATION);
         
-        // Bay THẲNG LÊN, không xoay/nghiêng — chỉ đổi top và kích thước, nên
-        // hoàn toàn ổn định, không có lý do gì để lắc lư.
-        gsap.to(clone, {
-            top: endTop,
-            width: endWidth,
-            height: endHeight,
-            duration: FLIGHT_DURATION,
-            delay: STEAM_DURATION,
-            ease: "power4.out",
-            onComplete: () => {
-                gsap.to(clone, { scale: 0.92, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 });
-                if(window.AudioEngine) AudioEngine.playPop();
-            }
-        });
+        // Timeline bay:
+        // 1. Phóng THẲNG LÊN TRỜI thoát khỏi khung nhìn
+        // 2. Xuất hiện nằm xiên xiên bên trái chữ "NGÀY HỘI"
+        const flightTimeline = gsap.timeline({ delay: STEAM_DURATION });
+        
+        flightTimeline
+            .to(clone, {
+                top: -rocketRect.height - 150,
+                duration: 0.75,
+                ease: "power2.in"
+            })
+            .set(clone, {
+                left: endLeft,
+                top: endTop - 40,
+                width: endWidth,
+                height: endHeight,
+                rotation: -35,
+                opacity: 0
+            })
+            .to(clone, {
+                top: endTop,
+                opacity: 1,
+                duration: 0.5,
+                ease: "back.out(1.5)",
+                onComplete: () => {
+                    gsap.to(clone, { scale: 0.92, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 });
+                    if(window.AudioEngine) AudioEngine.playPop();
+                }
+            });
     },
     
     /**
