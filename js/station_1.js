@@ -154,11 +154,11 @@ const Station1 = {
         // Dựa trên Fact: Tối ưu 30-35% nước và 40-60 PSI
         let isPerfect = false;
         let targetY = 0;
-        let targetX = 0;
         let targetRotation = 0;
         
         if (this.waterLevel >= 30 && this.waterLevel <= 40 && this.pressure >= 40 && this.pressure <= 70) {
             // BAY CỰC ĐỈNH - MỞ KHÓA MẢNH GHÉP
+            targetY = -800; // Bay vút ra khỏi khung hình
             isPerfect = true;
         } else if (this.waterLevel > 60) {
             // QUÁ NẶNG
@@ -177,17 +177,12 @@ const Station1 = {
             // Lắc rung chốt
             tl.to(this.rocket, { x: -5, duration: 0.05, yoyo: true, repeat: 5 });
             
-            if (isPerfect) {
-                // Bay thẳng lên cao vút
-                tl.to(this.rocket, { y: -800, x: 0, rotation: 0, duration: 0.7, ease: "power2.in" })
-                  // Đưa lên cao ẩn đi
-                  .set(this.rocket, { opacity: 0, x: -300, y: -1300, rotation: -45 })
-                  // Rơi vào vị trí bên trái chữ Ngày Hội
-                  .to(this.rocket, { opacity: 1, x: -200, y: -1150, duration: 0.8, ease: "power3.out" });
+            if(isPerfect) {
+                // Bay chính xác vào vòng tròn xanh cạnh chữ "NGÀY HỘI" ở hero
+                tl.add(() => this.flyToHeroTarget());
             } else {
                 tl.to(this.rocket, { 
                     y: targetY, 
-                    x: targetX,
                     rotation: targetRotation, 
                     duration: 1.5, 
                     ease: "power1.inOut" 
@@ -213,6 +208,64 @@ const Station1 = {
         }
     },
     
+    /**
+     * Bay tên lửa (bản sao position:fixed) từ vị trí thật trên màn hình
+     * tới đúng tâm vòng tròn #hero-target-circle cạnh chữ "NGÀY HỘI".
+     * Dùng getBoundingClientRect nên luôn chính xác dù người dùng đang
+     * cuộn ở vị trí nào.
+     */
+    flyToHeroTarget() {
+        const targetEl = document.getElementById('hero-target-circle');
+        if(!targetEl || !window.gsap) {
+            gsap.to(this.rocket, { y: -800, duration: 1, ease: "power4.out" });
+            return;
+        }
+        
+        const rocketRect = this.rocket.getBoundingClientRect();
+        const targetRect = targetEl.getBoundingClientRect();
+        
+        const startCx = rocketRect.left + rocketRect.width / 2;
+        const startCy = rocketRect.top + rocketRect.height / 2;
+        const endCx = targetRect.left + targetRect.width / 2;
+        const endCy = targetRect.top + targetRect.height / 2;
+        
+        // Tạo bản sao bay tự do trên toàn trang (không bị giới hạn bởi khung trạm 1)
+        const clone = this.rocket.cloneNode(true);
+        clone.id = 's1-rocket-flying';
+        Object.assign(clone.style, {
+            position: 'fixed',
+            left: (rocketRect.left) + 'px',
+            top: (rocketRect.top) + 'px',
+            width: rocketRect.width + 'px',
+            height: rocketRect.height + 'px',
+            margin: '0',
+            zIndex: '9999',
+            pointerEvents: 'none'
+        });
+        document.body.appendChild(clone);
+        this.rocket.style.opacity = '0';
+        
+        const dx = endCx - startCx;
+        const dy = endCy - startCy;
+        const scaleTarget = Math.min(
+            (targetRect.width * 0.72) / rocketRect.width,
+            (targetRect.height * 0.72) / rocketRect.height
+        );
+        
+        gsap.to(clone, {
+            x: dx,
+            y: dy,
+            scale: scaleTarget,
+            rotation: -8,
+            duration: 1.3,
+            ease: "power2.inOut",
+            onComplete: () => {
+                gsap.to(clone, { scale: scaleTarget * 0.92, duration: 0.25, yoyo: true, repeat: 1 });
+                if(window.AudioEngine) AudioEngine.playPop();
+            }
+        });
+    },
+    
     reset() {
         this.waterLevel = 0;
         this.pressure = 0;
@@ -222,10 +275,18 @@ const Station1 = {
         this.btnLaunch.style.color = "";
         
         this.thrust.style.opacity = 0;
+        this.rocket.style.opacity = '1';
+        
+        // Dọn bản sao tên lửa đang bay (nếu người dùng bấm Chơi lại giữa chừng)
+        const flyingClone = document.getElementById('s1-rocket-flying');
+        if(flyingClone) {
+            if(window.gsap) gsap.killTweensOf(flyingClone);
+            flyingClone.remove();
+        }
         
         if(window.gsap) {
             gsap.killTweensOf(this.rocket);
-            gsap.to(this.rocket, { y: 0, x: 0, rotation: 0, opacity: 1, duration: 0.5, ease: "power2.inOut", onComplete: () => {
+            gsap.to(this.rocket, { y: 0, x: 0, rotation: 0, duration: 0.5, ease: "power2.inOut", onComplete: () => {
                 this.isLaunched = false;
             } });
         } else {
