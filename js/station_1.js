@@ -271,31 +271,47 @@ const Station1 = {
         
         // Cuộn trang về đầu song song với tên lửa bay — áp cho mọi ứng viên,
         // cái nào không thật sự cuộn được thì set scrollTop=0 cũng vô hại.
-        gsap.to(scrollCandidates, { scrollTop: 0, duration: FLIGHT_DURATION, ease: "power2.inOut" });
+        gsap.to(scrollCandidates, { scrollTop: 0, duration: FLIGHT_DURATION, ease: "power4.out" });
         if(window.scrollY > 0) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        gsap.to(clone, {
-            top: rocketRect.top - 220,
-            duration: 0.45,
-            ease: "power4.out"
-        });
+        // Giai đoạn 1: phóng THẲNG ĐỨNG ra khỏi hẳn khung trạm 1 (tính theo
+        // kích thước thật của khung, không phải số cố định).
+        const stationEl = document.getElementById('station-1');
+        const stationRect = stationEl ? stationEl.getBoundingClientRect() : null;
+        const PHASE1_MARGIN = 40; // ra khỏi mép trên khung thêm chút cho thoáng
+        const phase1Top = stationRect ? (stationRect.top - PHASE1_MARGIN) : (rocketRect.top - 300);
+        const PHASE1_DURATION = 0.5;
         
-        gsap.to(clone, {
-            left: endLeft,
-            top: endTop,
-            width: endWidth,
-            height: endHeight,
-            rotation: -35,
-            duration: FLIGHT_DURATION - 0.3,
-            delay: 0.3,
-            ease: "power2.inOut",
-            overwrite: "auto",
+        // Giai đoạn 2: từ điểm vừa thoát khung, vòng cung sang đích cạnh "Ngày hội".
+        // Góc nghiêng lúc đáp tính theo đúng hướng bay của RIÊNG giai đoạn 2
+        // (tên lửa mặc định hướng "lên" = rotation 0).
+        const dx2 = endLeft - rocketRect.left; // left không đổi trong giai đoạn 1
+        const dy2 = endTop - phase1Top;
+        const flightAngleDeg = Math.atan2(dx2, -dy2) * 180 / Math.PI;
+        
+        const flightTl = gsap.timeline({
             onComplete: () => {
                 gsap.to(clone, { scale: 0.92, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 });
                 if(window.AudioEngine) AudioEngine.playPop();
             }
+        });
+        
+        flightTl.to(clone, {
+            top: phase1Top,
+            duration: PHASE1_DURATION,
+            ease: "power4.out"
+        });
+        
+        flightTl.to(clone, {
+            left: endLeft,
+            top: endTop,
+            width: endWidth,
+            height: endHeight,
+            rotation: flightAngleDeg,
+            duration: FLIGHT_DURATION - PHASE1_DURATION,
+            ease: "power2.inOut"
         });
     },
     
