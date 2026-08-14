@@ -277,13 +277,21 @@ const Station1 = {
         }
         
         gsap.to(clone, {
+            top: rocketRect.top - 220,
+            duration: 0.45,
+            ease: "power4.out"
+        });
+        
+        gsap.to(clone, {
             left: endLeft,
             top: endTop,
             width: endWidth,
             height: endHeight,
-            rotation: -8,
-            duration: FLIGHT_DURATION,
+            rotation: -35,
+            duration: FLIGHT_DURATION - 0.3,
+            delay: 0.3,
             ease: "power2.inOut",
+            overwrite: "auto",
             onComplete: () => {
                 gsap.to(clone, { scale: 0.92, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 });
                 if(window.AudioEngine) AudioEngine.playPop();
