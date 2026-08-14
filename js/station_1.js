@@ -250,12 +250,12 @@ const Station1 = {
         document.body.appendChild(clone);
         this.rocket.style.opacity = '0';
         
-        // Giai đoạn 1: phóng THẲNG ĐỨNG ra khỏi hẳn ô viền chấm chấm chứa
-        // "Lượng nước / Áp suất khí" (this.container = .simulation-placeholder),
-        // không tính phần tiêu đề "Trạm Chuyển Động" phía trên ô này.
-        const boxRect = this.container.getBoundingClientRect();
-        const PHASE1_MARGIN = 40; // ra khỏi mép trên ô thêm chút cho thoáng
-        const phase1Top = boxRect.top - PHASE1_MARGIN;
+        // Giai đoạn 1: phóng THẲNG ĐỨNG ra khỏi hẳn khung trạm 1 (tính theo
+        // kích thước thật của khung, không phải số cố định).
+        const stationEl = document.getElementById('station-1');
+        const stationRect = stationEl ? stationEl.getBoundingClientRect() : null;
+        const PHASE1_MARGIN = 40; // ra khỏi mép trên khung thêm chút cho thoáng
+        const phase1Top = stationRect ? (stationRect.top - PHASE1_MARGIN) : (rocketRect.top - 300);
         const PHASE1_DURATION = 0.5;
         
         // Giai đoạn 2: điểm uốn giữa đường (đẩy cao hơn cả điểm đầu lẫn điểm
