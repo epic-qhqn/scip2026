@@ -980,6 +980,11 @@ footer a:hover {
         transform-origin: bottom center !important;
     }
 
+    /* Neo cụm bình ở đáy (không phải giữa) để không dính chữ tiêu đề ở trên */
+    #station-3 .simulation-placeholder {
+        justify-content: flex-end !important;
+    }
+
     /* Adaptive Scale Trạm 4 (Bình ảo thuật) */
     #s4-flask-wrapper {
         transform: scale(calc(100vw / 400)) !important;
