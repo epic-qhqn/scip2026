@@ -202,7 +202,7 @@ const Station3 = {
                 Object.assign(bubble.style, {
                     position: 'absolute',
                     bottom: '-10px',
-                    left: (Math.random() * 80 + 10) + 'px',
+                    left: (Math.random() * 100) + 'px',
                     width: (Math.random() * 10 + 5) + 'px',
                     height: (Math.random() * 10 + 5) + 'px',
                     background: 'rgba(255,255,255,0.8)',

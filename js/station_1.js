@@ -154,11 +154,11 @@ const Station1 = {
         // Dựa trên Fact: Tối ưu 30-35% nước và 40-60 PSI
         let isPerfect = false;
         let targetY = 0;
+        let targetX = 0;
         let targetRotation = 0;
         
         if (this.waterLevel >= 30 && this.waterLevel <= 40 && this.pressure >= 40 && this.pressure <= 70) {
             // BAY CỰC ĐỈNH - MỞ KHÓA MẢNH GHÉP
-            targetY = -800; // Bay vút ra khỏi khung hình
             isPerfect = true;
         } else if (this.waterLevel > 60) {
             // QUÁ NẶNG
@@ -175,14 +175,24 @@ const Station1 = {
             const tl = gsap.timeline();
             
             // Lắc rung chốt
-            tl.to(this.rocket, { x: -5, duration: 0.05, yoyo: true, repeat: 5 })
-              // Bay lên
-              .to(this.rocket, { 
-                  y: targetY, 
-                  rotation: targetRotation, 
-                  duration: isPerfect ? 1 : 1.5, 
-                  ease: isPerfect ? "power4.out" : "power1.inOut" 
-              });
+            tl.to(this.rocket, { x: -5, duration: 0.05, yoyo: true, repeat: 5 });
+            
+            if (isPerfect) {
+                // Bay thẳng lên cao vút
+                tl.to(this.rocket, { y: -800, x: 0, rotation: 0, duration: 0.7, ease: "power2.in" })
+                  // Đưa lên cao ẩn đi
+                  .set(this.rocket, { opacity: 0, x: -300, y: -1300, rotation: -45 })
+                  // Rơi vào vị trí bên trái chữ Ngày Hội
+                  .to(this.rocket, { opacity: 1, x: -200, y: -1150, duration: 0.8, ease: "power3.out" });
+            } else {
+                tl.to(this.rocket, { 
+                    y: targetY, 
+                    x: targetX,
+                    rotation: targetRotation, 
+                    duration: 1.5, 
+                    ease: "power1.inOut" 
+                });
+            }
               
             // Nếu bay thành công, unlock mảnh ghép sau 1s
             if(isPerfect) {
@@ -215,7 +225,7 @@ const Station1 = {
         
         if(window.gsap) {
             gsap.killTweensOf(this.rocket);
-            gsap.to(this.rocket, { y: 0, x: 0, rotation: 0, duration: 0.5, ease: "power2.inOut", onComplete: () => {
+            gsap.to(this.rocket, { y: 0, x: 0, rotation: 0, opacity: 1, duration: 0.5, ease: "power2.inOut", onComplete: () => {
                 this.isLaunched = false;
             } });
         } else {

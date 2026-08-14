@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
 /* ========================================================
    SCIP STEM - Organic Neo-Brutalism Style
    Tone: Mùa Thu (Đỏ - Cam - Vàng)
@@ -29,7 +31,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+    /* Loại bỏ scroll-snap-type để fix lỗi giật lag khi cuộn trang */
 }
 
 body {
@@ -495,8 +497,8 @@ body {
 ========================================= */
 footer {
     text-align: center;
-    padding: 40px 20px 30px;
-    margin-top: 40px;
+    padding: 15px 20px 15px;
+    margin-top: 20px;
     background: var(--white);
     border-top: 4px dashed var(--border-color);
     scroll-snap-align: end;

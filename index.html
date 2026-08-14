@@ -9,7 +9,7 @@
     <!-- Google Fonts: Lexend -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
     
     <!-- CSS Chính -->
     <link rel="stylesheet" href="css/style.css">
@@ -225,6 +225,20 @@
     <!-- Footer -->
     <footer class="neo-footer">
         <h2 class="slogan">"Trao trải nghiệm - Khơi sáng tạo - Gieo yêu thương"</h2>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
+            <div class="feature-chip" style="padding: 10px 20px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                <img src="img/doantn.png" alt="Đoàn Thanh Niên" style="height: 75px; width: auto; object-fit: contain;">
+            </div>
+            <div class="feature-chip" style="padding: 10px 20px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                <img src="img/qh.png" alt="Quốc Học" style="height: 75px; width: auto; object-fit: contain;">
+            </div>
+            <div class="feature-chip" style="padding: 10px 20px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                <img src="img/hlhtnvn.png" alt="Hội LHTN VN" style="height: 75px; width: auto; object-fit: contain;">
+            </div>
+            <div class="feature-chip" style="padding: 10px 20px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                <img src="img/epic.png" alt="EPIC" style="height: 75px; width: auto; object-fit: contain;">
+            </div>
+        </div>
         <p style="margin-bottom: 2px;">Một dự án của <a href="https://www.facebook.com/DoantruongQuocHocQN" target="_blank">Đoàn trường THPT Quốc Học Quy Nhơn</a></p>
         <p style="margin-top: 2px;">Thực hiện: <a href="https://www.facebook.com/makeitepic.qhqn" target="_blank">EPIC - CLB STEM Quốc Học Quy Nhơn</a></p>
     </footer>
@@ -233,7 +247,7 @@
     <!-- Modal Nhập tên (hiện trước khi xem chứng nhận) -->
     <div id="name-input-modal" class="modal hidden">
         <div class="modal-content" style="position: relative;">
-            <span class="close-modal-btn" onclick="document.getElementById('name-input-modal').classList.add('hidden')" style="position: absolute; top: 10px; right: 20px; font-size: 2rem; font-weight: bold; cursor: pointer; color: var(--border-color);">&times;</span>
+            <span class="close-modal-btn" onclick="document.getElementById('name-input-modal').classList.add('hidden')" style="position: absolute; top: 10px; right: 20px; font-size: 4rem; font-weight: bold; cursor: pointer; color: var(--border-color);">&times;</span>
             <h2 style="font-size: 2.5rem; color: var(--red); margin-bottom: 20px;">🎉 CHÚC MỪNG! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--white);">Bạn đã hoàn thành xuất sắc 6 trạm thử thách Khoa học!<br>Nhập họ tên để nhận chứng nhận của bạn nhé.</p>
 
@@ -256,7 +270,7 @@
     <!-- Modal Chứng nhận -->
     <div id="cert-modal" class="modal hidden">
         <div class="modal-content" style="position: relative;">
-            <span class="close-modal-btn" onclick="document.getElementById('cert-modal').classList.add('hidden')" style="position: absolute; top: 10px; right: 20px; font-size: 2rem; font-weight: bold; cursor: pointer; color: var(--border-color);">&times;</span>
+            <span class="close-modal-btn" onclick="document.getElementById('cert-modal').classList.add('hidden')" style="position: absolute; top: 10px; right: 20px; font-size: 4rem; font-weight: bold; cursor: pointer; color: var(--border-color);">&times;</span>
             <h2 style="font-size: 2.5rem; color: var(--red); margin-bottom: 20px;">🎉 CHÚC MỪNG! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--white);">Bạn đã hoàn thành xuất sắc 6 trạm thử thách Khoa học!</p>
             

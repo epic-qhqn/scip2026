@@ -233,6 +233,48 @@ const Station6 = {
                 e.dataTransfer.setData('text/plain', el.id);
             });
             
+            // Hỗ trợ Touch (Mobile/Tablet)
+            let touchX, touchY;
+            el.addEventListener('touchstart', (e) => {
+                if(window.AudioEngine) AudioEngine.playClick();
+                e.preventDefault();
+                el.style.position = 'absolute';
+                el.style.zIndex = 1000;
+                document.body.appendChild(el); 
+                touchX = e.touches[0].clientX;
+                touchY = e.touches[0].clientY;
+                el.style.left = (touchX - 17) + 'px';
+                el.style.top = (touchY - 17) + 'px';
+            }, {passive: false});
+
+            el.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                touchX = e.touches[0].clientX;
+                touchY = e.touches[0].clientY;
+                el.style.left = (touchX - 17) + 'px';
+                el.style.top = (touchY - 17) + 'px';
+            }, {passive: false});
+
+            el.addEventListener('touchend', (e) => {
+                const dropzone = document.getElementById('s6-tree-dropzone');
+                const rect = dropzone.getBoundingClientRect();
+                
+                if (touchX >= rect.left && touchX <= rect.right && touchY >= rect.top && touchY <= rect.bottom) {
+                    if(window.AudioEngine) AudioEngine.playDrop();
+                    dropzone.appendChild(el);
+                    const plantScale = (window.gsap && gsap.getProperty('#s6-plant', 'scale')) || 1;
+                    el.style.left = ((touchX - rect.left) / plantScale - 17) + 'px';
+                    el.style.top = ((touchY - rect.top) / plantScale - 17) + 'px';
+                    if(window.gsap) gsap.fromTo(el, {scale:0}, {scale:1, duration: 0.5, ease: "back.out"});
+                } else {
+                    const tray = document.getElementById('s6-items-tray');
+                    tray.appendChild(el);
+                    el.style.position = 'relative';
+                    el.style.left = 'auto';
+                    el.style.top = 'auto';
+                }
+            });
+            
             tray.appendChild(el);
             gsap.fromTo(el, {scale: 0}, {scale: 1, delay: i * 0.2, duration: 0.5, ease: "back.out"});
         });
