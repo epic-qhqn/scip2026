@@ -250,21 +250,13 @@ const Station1 = {
         document.body.appendChild(clone);
         this.rocket.style.opacity = '0';
         
-        // Giai đoạn 1: phóng THẲNG ĐỨNG ra khỏi hẳn khung trạm 1 (tính theo
-        // kích thước thật của khung, không phải số cố định).
-        const stationEl = document.getElementById('station-1');
-        const stationRect = stationEl ? stationEl.getBoundingClientRect() : null;
-        const PHASE1_MARGIN = 40; // ra khỏi mép trên khung thêm chút cho thoáng
-        const phase1Top = stationRect ? (stationRect.top - PHASE1_MARGIN) : (rocketRect.top - 300);
-        const PHASE1_DURATION = 0.5;
-        
-        // Giai đoạn 2: điểm uốn giữa đường (đẩy cao hơn cả điểm đầu lẫn điểm
-        // cuối của đoạn này) để tên lửa tự vẽ một đường vòng cung thật khi bay
-        // sang đích, thay vì đi thẳng một đường.
+        // Vòng cung NHẸ từ vị trí xuất phát thẳng tới đích cạnh "Ngày hội":
+        // điểm uốn giữa chỉ đẩy cao hơn đôi chút so với 2 đầu, tạo độ cong
+        // vừa phải chứ không gấp khúc.
         const arcMidLeft = (rocketRect.left + endLeft) / 2;
-        const arcMidTop = Math.min(phase1Top, endTop) - 70;
+        const arcMidTop = Math.min(rocketRect.top, endTop) - 90;
+        const PHASE1_DURATION = 0.6;
         const PHASE2_DURATION = 0.5;
-        const PHASE3_DURATION = 0.4;
         
         // Góc đáp cố định: hướng lên, nghiêng 45° so với phương ngang
         // (tên lửa mặc định hướng "lên" = rotation 0 theo phương thẳng đứng,
@@ -278,28 +270,22 @@ const Station1 = {
             }
         });
         
-        // 1) Thẳng đứng ra khỏi khung trạm 1
-        flightTl.to(clone, {
-            top: phase1Top,
-            duration: PHASE1_DURATION,
-            ease: "power4.out"
-        });
-        // 2) Vòng qua điểm uốn giữa — bắt đầu nghiêng dần
+        // 1) Bay qua điểm uốn giữa — vòng cung nhẹ, bắt đầu nghiêng dần
         flightTl.to(clone, {
             left: arcMidLeft,
             top: arcMidTop,
-            rotation: LANDING_ROTATION * 0.6,
-            duration: PHASE2_DURATION,
-            ease: "power1.inOut"
+            rotation: LANDING_ROTATION * 0.5,
+            duration: PHASE1_DURATION,
+            ease: "power2.out"
         });
-        // 3) Hạ cánh vào đúng vị trí cạnh "Ngày hội", nghiêng cố định 45°
+        // 2) Hạ cánh vào đúng vị trí cạnh "Ngày hội", nghiêng cố định 45°
         flightTl.to(clone, {
             left: endLeft,
             top: endTop,
             width: endWidth,
             height: endHeight,
             rotation: LANDING_ROTATION,
-            duration: PHASE3_DURATION,
+            duration: PHASE2_DURATION,
             ease: "power2.out"
         });
     },
