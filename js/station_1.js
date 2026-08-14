@@ -210,24 +210,25 @@ const Station1 = {
     
     /**
      * Bay tên lửa (bản sao position:fixed) từ vị trí thật trên màn hình
-     * tới đúng tâm vòng tròn #hero-target-circle cạnh chữ "NGÀY HỘI".
-     * Dùng getBoundingClientRect nên luôn chính xác dù người dùng đang
-     * cuộn ở vị trí nào.
+     * tới ngay phía trên-trái chữ "NGÀY HỘI" ở hero — tính trực tiếp từ
+     * vị trí thật của tiêu đề lúc chạy (getBoundingClientRect), không qua
+     * điểm neo trung gian, nên luôn chính xác bất kể chiều cao header.
      */
     flyToHeroTarget() {
-        const targetEl = document.getElementById('hero-target-circle');
-        if(!targetEl || !window.gsap) {
+        const heroTitle = document.querySelector('header.hero h1');
+        if(!heroTitle || !window.gsap) {
             gsap.to(this.rocket, { y: -800, duration: 1, ease: "power4.out" });
             return;
         }
         
         const rocketRect = this.rocket.getBoundingClientRect();
-        const targetRect = targetEl.getBoundingClientRect();
+        const titleRect = heroTitle.getBoundingClientRect();
         
         const startCx = rocketRect.left + rocketRect.width / 2;
         const startCy = rocketRect.top + rocketRect.height / 2;
-        const endCx = targetRect.left + targetRect.width / 2;
-        const endCy = targetRect.top + targetRect.height / 2;
+        // Đích: ngay phía trên - bên trái chữ "N" của "NGÀY HỘI"
+        const endCx = titleRect.left - 10;
+        const endCy = titleRect.top - 15;
         
         // Tạo bản sao bay tự do trên toàn trang (không bị giới hạn bởi khung trạm 1)
         const clone = this.rocket.cloneNode(true);
@@ -247,10 +248,8 @@ const Station1 = {
         
         const dx = endCx - startCx;
         const dy = endCy - startCy;
-        const scaleTarget = Math.min(
-            (targetRect.width * 0.72) / rocketRect.width,
-            (targetRect.height * 0.72) / rocketRect.height
-        );
+        const targetSize = 56; // kích thước tên lửa lúc "đáp", tính bằng px
+        const scaleTarget = targetSize / rocketRect.width;
         
         gsap.to(clone, {
             x: dx,
