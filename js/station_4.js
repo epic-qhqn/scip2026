@@ -36,7 +36,7 @@ const Station4 = {
                 <div class="sim-subtext" style="max-width: 80%;">Trạng thái nghỉ (Khử): <span style="color:#E91E63; font-weight:bold;">HỒNG</span> <br>Trạng thái lắc (Oxy hóa): <span style="color:#2196F3; font-weight:bold;">XANH</span></div>
             </div>
             
-            <div id="s4-flask-wrapper" style="position: relative; width: 150px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transform-origin: bottom center; transform: scale(1.3); bottom: 0px;">
+            <div id="s4-flask-wrapper" style="position: relative; width: 150px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transform-origin: bottom center; transform: scale(1.0); bottom: 0px;">
                 
                 <!-- Decor nền -->
                 <div style="position: absolute; top: -50px; left: -100%; width: 300%; height: 250px; pointer-events: none; opacity: 0.15; background-image: repeating-linear-gradient(45deg, var(--orange) 0, var(--orange) 2px, transparent 2px, transparent 20px); z-index: 0;"></div>

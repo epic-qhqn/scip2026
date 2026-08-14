@@ -36,7 +36,7 @@ const Station3 = {
                 <div class="sim-subtext">NaHCO₃ (Baking soda) + CH₃COOH (Giấm)</div>
             </div>
             
-            <div style="position: relative; width: 140px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 0px; transform: scale(0.85); transform-origin: bottom center; bottom: 0px;">
+            <div style="position: relative; width: 140px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 0px; transform: scale(0.95); transform-origin: bottom center; bottom: 0px;">
                 
                 <!-- Decor nền -->
                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.1; background-image: radial-gradient(circle at 20% 30%, var(--red) 2px, transparent 2px), radial-gradient(circle at 80% 60%, var(--blue) 2px, transparent 2px); background-size: 50px 50px; z-index: 0;"></div>

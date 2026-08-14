@@ -991,6 +991,16 @@ footer a:hover {
         transform-origin: bottom center !important;
     }
 
+    /* Neo bình ở đáy (không phải giữa) để không dính chữ tiêu đề ở trên */
+    #station-4 .simulation-placeholder {
+        justify-content: flex-end !important;
+    }
+
+    /* Neo cụm cây/chậu ở đáy trạm 6 (không phải giữa) để không dính chữ tiêu đề ở trên */
+    #station-6 .simulation-placeholder {
+        justify-content: flex-end !important;
+    }
+
     /* Adaptive Scale Trạm 5 VEX IQ Robot & Nút bấm */
     #s5-map {
         transform: scale(calc(100vw / 450)) !important;
