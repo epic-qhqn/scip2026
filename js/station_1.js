@@ -212,54 +212,71 @@ const Station1 = {
      * Bay tên lửa (bản sao position:fixed) từ vị trí thật trên màn hình
      * tới ngay phía trên-trái chữ "NGÀY HỘI" ở hero — tính trực tiếp từ
      * vị trí thật của tiêu đề lúc chạy (getBoundingClientRect), không qua
-     * điểm neo trung gian, nên luôn chính xác bất kể chiều cao header.
+     * điểm neo trung gian.
+     *
+     * Trang dùng kỹ thuật khoá cuộn cho mobile (html/body position:fixed,
+     * cuộn thật sự diễn ra bên trong #app). Nếu lúc phóng người dùng đang
+     * cuộn xuống trạm 1, chữ "NGÀY HỘI" nằm ngoài màn hình — nên hàm này
+     * vừa cho tên lửa bay, vừa tự cuộn #app về đầu trang song song, để
+     * điểm đến luôn hiện đúng trên màn hình khi tên lửa đáp tới.
      */
     flyToHeroTarget() {
         const heroTitle = document.querySelector('header.hero h1');
+        const scroller = document.getElementById('app') || document.scrollingElement || document.documentElement;
         if(!heroTitle || !window.gsap) {
             gsap.to(this.rocket, { y: -800, duration: 1, ease: "power4.out" });
             return;
         }
         
         const rocketRect = this.rocket.getBoundingClientRect();
-        const titleRect = heroTitle.getBoundingClientRect();
+        const titleRectNow = heroTitle.getBoundingClientRect();
+        const currentScroll = scroller.scrollTop || 0;
         
-        const startCx = rocketRect.left + rocketRect.width / 2;
-        const startCy = rocketRect.top + rocketRect.height / 2;
-        // Đích: ngay phía trên - bên trái chữ "N" của "NGÀY HỘI"
-        const endCx = titleRect.left - 10;
-        const endCy = titleRect.top - 15;
+        // Vị trí chữ "NGÀY HỘI" SAU KHI trang cuộn về đầu (tính trước luôn,
+        // không cần đợi cuộn xong): cuộn lên bao nhiêu thì mọi thứ tụt
+        // xuống bấy nhiêu trên màn hình.
+        const futureTitleTop = titleRectNow.top + currentScroll;
+        const futureTitleLeft = titleRectNow.left;
+        
+        const targetSize = 56; // kích thước tên lửa lúc "đáp", tính bằng px
+        const scaleTarget = targetSize / rocketRect.width;
+        const endWidth = rocketRect.width * scaleTarget;
+        const endHeight = rocketRect.height * scaleTarget;
+        const endLeft = futureTitleLeft - 10;
+        const endTop = futureTitleTop - 15;
         
         // Tạo bản sao bay tự do trên toàn trang (không bị giới hạn bởi khung trạm 1)
         const clone = this.rocket.cloneNode(true);
         clone.id = 's1-rocket-flying';
         Object.assign(clone.style, {
             position: 'fixed',
-            left: (rocketRect.left) + 'px',
-            top: (rocketRect.top) + 'px',
+            left: rocketRect.left + 'px',
+            top: rocketRect.top + 'px',
             width: rocketRect.width + 'px',
             height: rocketRect.height + 'px',
             margin: '0',
-            zIndex: '9999',
-            pointerEvents: 'none'
+            zIndex: '99999',
+            pointerEvents: 'none',
+            transform: 'none' // reset sạch transform dư từ hiệu ứng rung chốt trước đó
         });
         document.body.appendChild(clone);
         this.rocket.style.opacity = '0';
         
-        const dx = endCx - startCx;
-        const dy = endCy - startCy;
-        const targetSize = 56; // kích thước tên lửa lúc "đáp", tính bằng px
-        const scaleTarget = targetSize / rocketRect.width;
+        const FLIGHT_DURATION = 1.3;
+        
+        // Cuộn trang về đầu song song với tên lửa bay
+        gsap.to(scroller, { scrollTop: 0, duration: FLIGHT_DURATION, ease: "power2.inOut" });
         
         gsap.to(clone, {
-            x: dx,
-            y: dy,
-            scale: scaleTarget,
+            left: endLeft,
+            top: endTop,
+            width: endWidth,
+            height: endHeight,
             rotation: -8,
-            duration: 1.3,
+            duration: FLIGHT_DURATION,
             ease: "power2.inOut",
             onComplete: () => {
-                gsap.to(clone, { scale: scaleTarget * 0.92, duration: 0.25, yoyo: true, repeat: 1 });
+                gsap.to(clone, { scale: 0.92, transformOrigin: "50% 50%", duration: 0.25, yoyo: true, repeat: 1 });
                 if(window.AudioEngine) AudioEngine.playPop();
             }
         });
