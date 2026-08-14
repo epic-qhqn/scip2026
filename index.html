@@ -19,20 +19,6 @@
     <div id="app">
     <div id="leaves-container"></div>
 
-    <!-- Easter Eggs (Parallax elements ngoài rìa) -->
-    <div class="easter-egg parallax-fast" style="top: 750px; left: 1.5vw;" onclick="AudioEngine.playPop()">🐿️</div>
-    <div class="easter-egg parallax-slow" style="top: 1400px; right: 2vw;" onclick="AudioEngine.playPop()">🌰</div>
-    <div class="easter-egg parallax-fast" style="top: 2100px; left: 1.5vw;" onclick="AudioEngine.playPop()">🍄</div>
-    <div class="easter-egg parallax-slow" style="top: 2850px; right: 2vw;" onclick="AudioEngine.playPop()">🍎</div>
-    
-    <!-- New Easter Eggs -->
-    <div class="easter-egg parallax-cloud" style="top: 300px; right: 2vw; font-size: 4rem; opacity: 0.45; z-index: -1;">☁️</div>
-    <div class="easter-egg parallax-cloud" style="top: 1100px; left: 1vw; font-size: 5rem; opacity: 0.35; z-index: -1;">☁️</div>
-    <div class="easter-egg parallax-cloud" style="top: 2200px; right: 1vw; font-size: 3rem; opacity: 0.45; z-index: -1;">☁️</div>
-    <div class="easter-egg parallax-fast" style="top: 950px; right: 2.5vw;" onclick="AudioEngine.playPop()">✨</div>
-    <div class="easter-egg parallax-slow" style="top: 1650px; left: 2vw;" onclick="AudioEngine.playPop()">🍀</div>
-    <div class="easter-egg parallax-fast" style="top: 3200px; left: 1.5vw;" onclick="AudioEngine.playPop()">🍁</div>
-
     <!-- Navigation & Progress Bar -->
     <nav class="top-nav">
         <div class="logo">🚀 EPIC x SCIP</div>
@@ -104,6 +90,7 @@
         <!-- Trạm 1 -->
         <section class="station card bg-yellow" id="station-1">
             <div class="station-number">01</div>
+            <div class="station-decor decor-top-right parallax-slow" onclick="AudioEngine.playPop()" title="Nhấp vào tui nè!">🐿️</div>
             <h2>Trạm Chuyển Động</h2>
             <p>Chế tạo và phóng tên lửa nước</p>
             <div class="simulation-placeholder">
@@ -131,6 +118,7 @@
         <!-- Trạm 2: Cơ năng -> Điện năng -->
         <section class="station card bg-blue" id="station-2">
             <div class="station-number">02</div>
+            <div class="station-decor decor-top-left parallax-fast" onclick="AudioEngine.playPop()" title="Nhấp vào tui nè!">🌰</div>
             <h2>Trạm Năng Lượng</h2>
             <p>Biến đổi cơ năng thành điện năng</p>
             <div class="simulation-placeholder">
@@ -158,6 +146,7 @@
         <!-- Trạm 3: Baking Soda + CH3COOH -->
         <section class="station card bg-red" id="station-3">
             <div class="station-number">03</div>
+            <div class="station-decor decor-top-right parallax-slow" onclick="AudioEngine.playPop()" title="Nhấp vào tui nè!">🍄</div>
             <h2>Trạm Hóa Học Vui</h2>
             <p>Bong bóng tự phồng & Đèn Lava</p>
             <div class="simulation-placeholder">
@@ -184,6 +173,7 @@
         <!-- Trạm 4: Methylene Blue -->
         <section class="station card bg-orange" id="station-4">
             <div class="station-number">04</div>
+            <div class="station-decor decor-top-left parallax-bounce" onclick="AudioEngine.playPop()" title="Nhấp vào tui nè!">✨</div>
             <h2>Trạm Ảo Thuật</h2>
             <p>Sự đổi màu kỳ diệu của Methylene Blue</p>
             <div class="simulation-placeholder">
@@ -198,6 +188,7 @@
         <!-- Trạm 5: VEX IQ -->
         <section class="station card bg-green" id="station-5">
             <div class="station-number">05</div>
+            <div class="station-decor decor-top-right parallax-fast" onclick="AudioEngine.playPop()" title="Nhấp vào tui nè!">🍀</div>
             <h2>Trạm VEX IQ</h2>
             <p>Lập trình hướng đi bằng thẻ màu sắc</p>
             <div class="simulation-placeholder">
@@ -212,6 +203,7 @@
         <!-- Trạm 6 -->
         <section class="station card bg-white" id="station-6">
             <div class="station-number">06</div>
+            <div class="station-decor decor-top-left parallax-drift" onclick="AudioEngine.playPop()" title="Nhấp vào tui nè!">🍁</div>
             <h2>Trạm Sáng Tạo</h2>
             <p>Gieo mầm cây & Trang trí móc khóa</p>
             <div class="simulation-placeholder">
@@ -283,7 +275,8 @@
     </div>
 
     
-    <!-- Thư viện GSAP cho Animation mượt mà -->
+    <!-- Thư viện Pháo hoa Confetti & GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     

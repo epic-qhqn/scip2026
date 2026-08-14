@@ -117,6 +117,13 @@ const RewardSystem = {
         
         if(isFinished) {
             setTimeout(() => {
+                if(window.confetti) {
+                    confetti({
+                        particleCount: 80,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
                 const nameModal = document.getElementById('name-input-modal');
                 if(nameModal) {
                     nameModal.classList.remove('hidden');
@@ -180,6 +187,13 @@ const NameInputController = {
             if(nameModal) nameModal.classList.add('hidden');
             if(certModal) {
                 certModal.classList.remove('hidden');
+                if(window.confetti) {
+                    confetti({
+                        particleCount: 150,
+                        spread: 90,
+                        origin: { y: 0.5 }
+                    });
+                }
                 if(window.gsap) {
                     gsap.fromTo(".modal-content",
                         { y: -50, opacity: 0 },
