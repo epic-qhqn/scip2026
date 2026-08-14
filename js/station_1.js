@@ -214,15 +214,19 @@ const Station1 = {
      * vị trí thật của tiêu đề lúc chạy (getBoundingClientRect), không qua
      * điểm neo trung gian.
      *
-     * Trang dùng kỹ thuật khoá cuộn cho mobile (html/body position:fixed,
-     * cuộn thật sự diễn ra bên trong #app). Nếu lúc phóng người dùng đang
-     * cuộn xuống trạm 1, chữ "NGÀY HỘI" nằm ngoài màn hình — nên hàm này
-     * vừa cho tên lửa bay, vừa tự cuộn #app về đầu trang song song, để
-     * điểm đến luôn hiện đúng trên màn hình khi tên lửa đáp tới.
+     * Trang cuộn theo 2 kiểu tuỳ kích thước màn hình: desktop cuộn cả cửa
+     * sổ (window/documentElement), mobile cuộn bên trong #app (do CSS khoá
+     * html lại). Hàm này nhận diện đúng cơ chế đang active bằng cách lấy
+     * scrollTop lớn nhất trong các ứng viên, để luôn tính đúng bất kể chế độ nào.
      */
     flyToHeroTarget() {
         const heroTitle = document.querySelector('header.hero h1');
-        const scroller = document.getElementById('app') || document.scrollingElement || document.documentElement;
+        const scrollCandidates = [
+            document.documentElement,
+            document.body,
+            document.getElementById('app')
+        ].filter(Boolean);
+        
         if(!heroTitle || !window.gsap) {
             gsap.to(this.rocket, { y: -800, duration: 1, ease: "power4.out" });
             return;
@@ -230,7 +234,8 @@ const Station1 = {
         
         const rocketRect = this.rocket.getBoundingClientRect();
         const titleRectNow = heroTitle.getBoundingClientRect();
-        const currentScroll = scroller.scrollTop || 0;
+        // Lấy scrollTop lớn nhất trong các phần tử có thể đang là "trục cuộn thật"
+        const currentScroll = Math.max(0, ...scrollCandidates.map(el => el.scrollTop || 0), window.scrollY || 0);
         
         // Vị trí chữ "NGÀY HỘI" SAU KHI trang cuộn về đầu (tính trước luôn,
         // không cần đợi cuộn xong): cuộn lên bao nhiêu thì mọi thứ tụt
@@ -264,8 +269,12 @@ const Station1 = {
         
         const FLIGHT_DURATION = 1.3;
         
-        // Cuộn trang về đầu song song với tên lửa bay
-        gsap.to(scroller, { scrollTop: 0, duration: FLIGHT_DURATION, ease: "power2.inOut" });
+        // Cuộn trang về đầu song song với tên lửa bay — áp cho mọi ứng viên,
+        // cái nào không thật sự cuộn được thì set scrollTop=0 cũng vô hại.
+        gsap.to(scrollCandidates, { scrollTop: 0, duration: FLIGHT_DURATION, ease: "power2.inOut" });
+        if(window.scrollY > 0) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         
         gsap.to(clone, {
             left: endLeft,
