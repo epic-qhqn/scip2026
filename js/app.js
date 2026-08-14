@@ -296,12 +296,12 @@ const PhotoFrameEngine = {
         frame.classList.add(animClasses[Math.floor(Math.random() * animClasses.length)]);
         frame.classList.add('frame-' + side);
         
-        // Kích thước ngẫu nhiên đa dạng: nhỏ (110px), vừa (140px), to (170px)
-        const size = Math.floor(Math.random() * 60) + 110; 
+        // Kích thước vừa vặn (105px - 130px)
+        const size = Math.floor(Math.random() * 25) + 105; 
         
-        // Khoảng cách đẩy ra lề ngoài card: slot 0 đẩy 145px, slot 1 đẩy 195px (Lệch nhau hoàn toàn)
-        const sideOffset = slotIndex === 0 ? 145 : 195;
-        const rot = Math.random() * 26 - 13; // Góc nghiêng -13 đến +13 độ
+        // Khoảng cách đẩy ra ngoài card vừa phải (slot 0 đẩy 105px, slot 1 đẩy 135px)
+        const sideOffset = slotIndex === 0 ? 105 : 135;
+        const rot = Math.random() * 20 - 10; // Góc nghiêng -10 đến +10 độ
         
         // 3 Phong cách thiết kế đa dạng (tránh bị 1 màu)
         const frameStyles = [
@@ -309,15 +309,15 @@ const PhotoFrameEngine = {
             {
                 background: '#FFFFFF',
                 border: '3px solid #1A1A1A',
-                boxShadow: '6px 6px 0px #1A1A1A',
+                boxShadow: '4px 4px 0px #1A1A1A',
                 tapeColor: 'rgba(255, 213, 79, 0.85)',
                 captionColor: '#1A1A1A'
             },
             // Style 2: Khung Gỗ Ấm Áp Mùa Thu
             {
                 background: '#FFF8E1',
-                border: '6px solid #8D6E63',
-                boxShadow: '6px 6px 12px rgba(0,0,0,0.25)',
+                border: '4px solid #8D6E63',
+                boxShadow: '4px 4px 8px rgba(0,0,0,0.2)',
                 tapeColor: 'rgba(224, 60, 49, 0.75)',
                 captionColor: '#5D4037'
             },
@@ -325,7 +325,7 @@ const PhotoFrameEngine = {
             {
                 background: '#FFF',
                 border: '3px solid #1A1A1A',
-                boxShadow: '6px 6px 0px #E03C31',
+                boxShadow: '4px 4px 0px #E03C31',
                 tapeColor: 'rgba(33, 150, 243, 0.75)',
                 captionColor: '#E03C31'
             }
@@ -336,7 +336,7 @@ const PhotoFrameEngine = {
         Object.assign(frame.style, {
             position: 'absolute',
             width: size + 'px',
-            padding: '10px 10px 20px 10px',
+            padding: '8px 8px 16px 8px',
             background: style.background,
             border: style.border,
             boxShadow: style.boxShadow,

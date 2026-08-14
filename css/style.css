@@ -143,13 +143,13 @@ body {
 ========================================= */
 .hero {
     text-align: center;
-    padding: 20px;
+    padding: calc(90px + 2vh) 20px 40px !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100dvh;
-    scroll-snap-align: start;
+    box-sizing: border-box;
 }
 
 .hero-badge {
@@ -159,8 +159,9 @@ body {
     padding: 10px 30px;
     border-radius: 50px;
     font-weight: 800;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    margin-bottom: 30px;
+    font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+    margin-top: 15px;
+    margin-bottom: 25px;
     transform: rotate(-3deg);
     border: 3px solid var(--border-color);
     box-shadow: 4px 4px 0px var(--border-color);
@@ -694,23 +695,23 @@ footer a:hover {
     opacity: 1;
 }
 
-.timeline-dot.active {
-    background: var(--red);
-    transform: scale(1.4);
-    box-shadow: 0 0 10px rgba(224, 60, 49, 0.6);
-}
-
 .easter-egg {
     position: absolute;
-    font-size: clamp(2rem, 5vw, 4rem);
+    font-size: clamp(2rem, 3.2vw, 3.2rem);
     cursor: pointer;
     user-select: none;
-    z-index: 10;
+    z-index: 0;
+    pointer-events: auto;
     filter: drop-shadow(3px 3px 0px var(--border-color));
 }
 
 .easter-egg:active {
     transform: scale(0.7) !important;
+}
+
+.empty-photo-frame {
+    pointer-events: none !important;
+    user-select: none !important;
 }
 
 /* CSS Floating Parallax */
@@ -1101,43 +1102,28 @@ footer a:hover {
         flex: 1 1 auto !important;
     }
 
-    /* Hide the footprint trails, timeline and sticky notes on mobile for cleaner look */
+    /* Ẩn hoàn toàn dấu chân, timeline, khung ảnh và easter eggs trên mobile để UI luôn gọn gàng và không bị đè */
     .footprint-trail,
     .timeline-container,
-    .empty-photo-frame {
+    .empty-photo-frame,
+    .easter-egg {
         display: none !important;
     }
 }
 
-@media (max-width: 1199px) {
+/* Ẩn các chi tiết trang trí lơ lửng ngoài lề trên màn hình <= 1350px (Laptop, PC scale 90% / 16:9) */
+@media (max-width: 1350px) {
+    .empty-photo-frame,
+    .easter-egg,
     .stem-trophy-badge {
         display: none !important;
     }
 }
 
+/* Ẩn thanh Timeline trên màn hình Tablet/Mobile <= 1024px */
 @media (max-width: 1024px) {
     .timeline-container {
-        display: flex !important;
-        left: 5px !important;
-        transform: scale(0.65) !important;
-        transform-origin: left center !important;
-    }
-    .timeline-dot::after {
         display: none !important;
-    }
-    .empty-photo-frame {
-        display: block !important;
-        opacity: 1 !important;
-        z-index: 10 !important;
-        transform: scale(0.45) !important;
-    }
-    .empty-photo-frame.frame-left {
-        left: -15px !important;
-        transform-origin: center left !important;
-    }
-    .empty-photo-frame.frame-right {
-        right: -15px !important;
-        transform-origin: center right !important;
     }
 }
 
