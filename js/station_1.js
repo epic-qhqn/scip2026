@@ -212,20 +212,11 @@ const Station1 = {
      * Bay tên lửa (bản sao position:fixed) từ vị trí thật trên màn hình
      * tới ngay phía trên-trái chữ "NGÀY HỘI" ở hero — tính trực tiếp từ
      * vị trí thật của tiêu đề lúc chạy (getBoundingClientRect), không qua
-     * điểm neo trung gian.
-     *
-     * Trang cuộn theo 2 kiểu tuỳ kích thước màn hình: desktop cuộn cả cửa
-     * sổ (window/documentElement), mobile cuộn bên trong #app (do CSS khoá
-     * html lại). Hàm này nhận diện đúng cơ chế đang active bằng cách lấy
-     * scrollTop lớn nhất trong các ứng viên, để luôn tính đúng bất kể chế độ nào.
+     * điểm neo trung gian. Không tự cuộn trang — toàn bộ chuyển động chỉ
+     * đến từ chính tên lửa.
      */
     flyToHeroTarget() {
         const heroTitle = document.querySelector('header.hero h1');
-        const scrollCandidates = [
-            document.documentElement,
-            document.body,
-            document.getElementById('app')
-        ].filter(Boolean);
         
         if(!heroTitle || !window.gsap) {
             gsap.to(this.rocket, { y: -800, duration: 1, ease: "power4.out" });
@@ -233,22 +224,14 @@ const Station1 = {
         }
         
         const rocketRect = this.rocket.getBoundingClientRect();
-        const titleRectNow = heroTitle.getBoundingClientRect();
-        // Lấy scrollTop lớn nhất trong các phần tử có thể đang là "trục cuộn thật"
-        const currentScroll = Math.max(0, ...scrollCandidates.map(el => el.scrollTop || 0), window.scrollY || 0);
-        
-        // Vị trí chữ "NGÀY HỘI" SAU KHI trang cuộn về đầu (tính trước luôn,
-        // không cần đợi cuộn xong): cuộn lên bao nhiêu thì mọi thứ tụt
-        // xuống bấy nhiêu trên màn hình.
-        const futureTitleTop = titleRectNow.top + currentScroll;
-        const futureTitleLeft = titleRectNow.left;
+        const titleRect = heroTitle.getBoundingClientRect();
         
         const targetSize = 56; // kích thước tên lửa lúc "đáp", tính bằng px
         const scaleTarget = targetSize / rocketRect.width;
         const endWidth = rocketRect.width * scaleTarget;
         const endHeight = rocketRect.height * scaleTarget;
-        const endLeft = futureTitleLeft - 10;
-        const endTop = futureTitleTop - 15;
+        const endLeft = titleRect.left - 10;
+        const endTop = titleRect.top - 15;
         
         // Tạo bản sao bay tự do trên toàn trang (không bị giới hạn bởi khung trạm 1)
         const clone = this.rocket.cloneNode(true);
@@ -267,15 +250,6 @@ const Station1 = {
         document.body.appendChild(clone);
         this.rocket.style.opacity = '0';
         
-        const FLIGHT_DURATION = 1.3;
-        
-        // Cuộn trang về đầu song song với tên lửa bay — áp cho mọi ứng viên,
-        // cái nào không thật sự cuộn được thì set scrollTop=0 cũng vô hại.
-        gsap.to(scrollCandidates, { scrollTop: 0, duration: FLIGHT_DURATION, ease: "power4.out" });
-        if(window.scrollY > 0) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
         // Giai đoạn 1: phóng THẲNG ĐỨNG ra khỏi hẳn khung trạm 1 (tính theo
         // kích thước thật của khung, không phải số cố định).
         const stationEl = document.getElementById('station-1');
@@ -284,12 +258,18 @@ const Station1 = {
         const phase1Top = stationRect ? (stationRect.top - PHASE1_MARGIN) : (rocketRect.top - 300);
         const PHASE1_DURATION = 0.5;
         
-        // Giai đoạn 2: từ điểm vừa thoát khung, vòng cung sang đích cạnh "Ngày hội".
-        // Góc nghiêng lúc đáp tính theo đúng hướng bay của RIÊNG giai đoạn 2
-        // (tên lửa mặc định hướng "lên" = rotation 0).
-        const dx2 = endLeft - rocketRect.left; // left không đổi trong giai đoạn 1
-        const dy2 = endTop - phase1Top;
-        const flightAngleDeg = Math.atan2(dx2, -dy2) * 180 / Math.PI;
+        // Giai đoạn 2: điểm uốn giữa đường (đẩy cao hơn cả điểm đầu lẫn điểm
+        // cuối của đoạn này) để tên lửa tự vẽ một đường vòng cung thật khi bay
+        // sang đích, thay vì đi thẳng một đường.
+        const arcMidLeft = (rocketRect.left + endLeft) / 2;
+        const arcMidTop = Math.min(phase1Top, endTop) - 70;
+        const PHASE2_DURATION = 0.5;
+        const PHASE3_DURATION = 0.4;
+        
+        // Góc đáp cố định: hướng lên, nghiêng 45° so với phương ngang
+        // (tên lửa mặc định hướng "lên" = rotation 0 theo phương thẳng đứng,
+        // nên nghiêng 45° so với phương ngang tương đương xoay 45° so với dọc).
+        const LANDING_ROTATION = 45;
         
         const flightTl = gsap.timeline({
             onComplete: () => {
@@ -298,20 +278,29 @@ const Station1 = {
             }
         });
         
+        // 1) Thẳng đứng ra khỏi khung trạm 1
         flightTl.to(clone, {
             top: phase1Top,
             duration: PHASE1_DURATION,
             ease: "power4.out"
         });
-        
+        // 2) Vòng qua điểm uốn giữa — bắt đầu nghiêng dần
+        flightTl.to(clone, {
+            left: arcMidLeft,
+            top: arcMidTop,
+            rotation: LANDING_ROTATION * 0.6,
+            duration: PHASE2_DURATION,
+            ease: "power1.inOut"
+        });
+        // 3) Hạ cánh vào đúng vị trí cạnh "Ngày hội", nghiêng cố định 45°
         flightTl.to(clone, {
             left: endLeft,
             top: endTop,
             width: endWidth,
             height: endHeight,
-            rotation: flightAngleDeg,
-            duration: FLIGHT_DURATION - PHASE1_DURATION,
-            ease: "power2.inOut"
+            rotation: LANDING_ROTATION,
+            duration: PHASE3_DURATION,
+            ease: "power2.out"
         });
     },
     
