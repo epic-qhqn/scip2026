@@ -102,7 +102,7 @@ const CertificateModule = {
             downloadLink.href = dataUrl;
             const safeName = name
                 .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // bỏ dấu để tên file an toàn
-                .replace(/đ/gi, 'd')
+                .replace(/Đ/g, 'D').replace(/đ/g, 'd')
                 .replace(/[^a-zA-Z0-9]+/g, '_')
                 .replace(/^_+|_+$/g, '');
             downloadLink.setAttribute('download', `ChungNhan_SCIP_GIALAI_${safeName || 'HocSinh'}.png`);
