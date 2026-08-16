@@ -11,13 +11,13 @@ const CertificateModule = {
     TEMPLATE_SRC: 'img/cert_template.png',
 
     // Vị trí & style của dòng tên, tính theo tỉ lệ so với kích thước ảnh nền
-    NAME_Y_RATIO: 452 / 1300,
-    NAME_MAX_WIDTH_RATIO: 640 / 1700, // độ rộng tối đa (giữa 2 đầu gạch chấm vàng)
-    NAME_FONT_SIZE_RATIO: 42 / 1700,
-    NAME_MIN_FONT_SIZE_RATIO: 20 / 1700,
-    NAME_COLOR: '#0E2A47',
+    NAME_Y_RATIO: 502 / 1340,
+    NAME_MAX_WIDTH_RATIO: 680 / 1700, // độ rộng tối đa (giữa 2 đầu gạch chấm cam)
+    NAME_FONT_SIZE_RATIO: 52 / 1700,
+    NAME_MIN_FONT_SIZE_RATIO: 24 / 1700,
+    NAME_COLOR: '#E03C31',
     NAME_FONT_FAMILY: '"Lexend", Arial, sans-serif',
-    NAME_FONT_WEIGHT: 600,
+    NAME_FONT_WEIGHT: 800,
 
     _templateImg: null,
 
