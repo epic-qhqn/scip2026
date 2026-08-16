@@ -1,6 +1,6 @@
 /**
  * CERTIFICATE.JS - Sinh chứng nhận cá nhân hoá
- * Vẽ tên người tham gia lên nền chứng nhận (img/cert_template.png) bằng Canvas 2D,
+ * Vẽ tên người tham gia lên nền chứng nhận (img/cert.png) bằng Canvas 2D,
  * sau đó xuất ra ảnh PNG để hiển thị trong modal và cho phép tải về.
  *
  * Toạ độ NAME_Y_RATIO / NAME_MAX_WIDTH_RATIO được tính theo đúng bố cục gốc
@@ -8,7 +8,7 @@
  * cho ảnh nền ở bất kỳ độ phân giải nào.
  */
 const CertificateModule = {
-    TEMPLATE_SRC: 'img/cert_template.png',
+    TEMPLATE_SRC: 'img/cert.png',
 
     // Vị trí & style của dòng tên, tính theo tỉ lệ so với kích thước ảnh nền
     NAME_Y_RATIO: 502 / 1340,
